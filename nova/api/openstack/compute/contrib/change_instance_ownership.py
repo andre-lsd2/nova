@@ -38,7 +38,7 @@ class ChangeInstanceOwnershipController(object):
         context = req.environ['nova.context']
         authorize(context)
 
-        """instance = db.instance_get_by_uuid(context, id)
+        instance = db.instance_get_by_uuid(context, id)
 
         owner_id = context.user_id
 
@@ -47,7 +47,10 @@ class ChangeInstanceOwnershipController(object):
         user_id = body['user_id'] if 'user_id' in body else owner_id
         project_id = body['project_id'] if 'project_id' in body else instance.project_id
 
-        if (user_id == owner_id and project_id == instance.project_id):
+        LOG.debug("::DEBUG::CHANGE_INSTANCE_OWNERSHIP::ACTION::USER_ID::%s::PROJECT_ID::%s::" % (user_id, project_id))
+        print("::PRINT::CHANGE_INSTANCE_OWNERSHIP::ACTION::USER_ID::%s::PROJECT_ID::%s::" % (user_id, project_id))
+
+        """if (user_id == owner_id and project_id == instance.project_id):
             raise webob.exc.HTTPBadRequest(explanation="User_id or Project_id were not found in the request body")
 
         if not self._is_user_in_project(user_id, project_id, keystone_client):
