@@ -35,10 +35,10 @@ class ChangeInstanceOwnershipController(object):
         LOG.debug("::DEBUG::CHANGE_INSTANCE_OWNERSHIP::ACTION::")
         print("::DEBUG::CHANGE_INSTANCE_OWNERSHIP::ACTION::")
 
-        """context = req.environ['nova.context']
+        context = req.environ['nova.context']
         authorize(context)
 
-        instance = db.instance_get_by_uuid(context, id)
+        """instance = db.instance_get_by_uuid(context, id)
 
         owner_id = context.user_id
 
