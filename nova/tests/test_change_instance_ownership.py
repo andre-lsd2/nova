@@ -159,7 +159,7 @@ class ChangeInstanceOwnershipTestCase(test.TestCase):
         print("Controller")
         print(self.controller)
 
-        self.controller.action(req, id, body)
+        self.controller.action(req, instance_uuid, body)
 
         self.assertEquals(1, 2)
 
