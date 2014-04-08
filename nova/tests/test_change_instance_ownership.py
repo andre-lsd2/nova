@@ -136,15 +136,18 @@ class ChangeInstanceOwnershipTestCase(test.TestCase):
 
         instance = self._create_instance("6289b12599924beaa00da02f785eebc0", "d131facb1ec74024b88b4987b2ef3753")
         print("Instance")
-        #print(instance.to_dict())
+        print(instance)
 
         instance_uuid = instance.uuid
         project_owner_id = instance.project_id
 
-        kwargs = {}
-        kwargs['base_url'] = 'http://localhost/v2'
-        req = os_wsgi.Request.blank('/%s/os-change-instance-ownership/%s' % (project_owner_id, instance_uuid), kwargs)
-        req.environ['nova.context'] = self.context
+        fakes.HTTPRequest.blank('/v2/fake/os-floating-ips')
+
+        #kwargs = {}
+        #kwargs['base_url'] = 'http://localhost/v2'
+        #req = os_wsgi.Request.blank('/%s/os-change-instance-ownership/%s' % (project_owner_id, instance_uuid), kwargs)
+        #req.environ['nova.context'] = self.context
+        req = fakes.HTTPRequest.blank('/%s/os-change-instance-ownership/%s' % (project_owner_id, instance_uuid))
         print("Request")
         print(req)
 
