@@ -655,6 +655,14 @@
             "name": "ServerGroups",
             "namespace": "http://docs.openstack.org/compute/ext/servergroups/api/v2",
             "updated": "%(timestamp)s"
+        },
+        {
+            "alias": "os-change-instance-ownership",
+            "description": "%(text)s",
+            "links": [],
+            "name": "ChangeInstanceOwnership",
+            "namespace": "http://docs.openstack.org/compute/ext/change-instance-ownership/api/v2",
+            "updated": "%(timestamp)s"
         }
     ]
 }
