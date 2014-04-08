@@ -49,6 +49,7 @@ class ChangeInstanceOwnershipController(object):
         #compat_catalog = { 'access': {'token': {'id': ''}}}
         compat_catalog = None
         compat_catalog = {'token': {'catalog': context.service_catalog,'methods': ''}}
+        compat_catalog = {'access': {'serviceCatalog': context.service_catalog,'token': {'id': ''}}}
 
         sc = access.AccessInfo.factory(None, compat_catalog)
 
