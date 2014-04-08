@@ -346,7 +346,7 @@ policy_data = """
 
     "network:get_floating_ip": "",
     "network:get_floating_ip_pools": "",
-
+    "compute_extension:change_instance_ownership": "",
     "network:get_floating_ip_by_address": "",
     "network:get_floating_ips_by_project": "",
     "network:get_floating_ips_by_fixed_address": "",

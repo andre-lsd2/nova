@@ -160,3 +160,5 @@ class ChangeInstanceOwnershipTestCase(test.TestCase):
 
         self.controller.action(req, id, body)
 
+        self.assertEquals(1, 2)
+
