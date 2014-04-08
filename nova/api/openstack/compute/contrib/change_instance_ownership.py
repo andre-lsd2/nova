@@ -33,7 +33,7 @@ class ChangeInstanceOwnershipController(object):
     def action(self, req, id, body):
 
         LOG.debug("::DEBUG::CHANGE_INSTANCE_OWNERSHIP::ACTION::")
-        print("::DEBUG::CHANGE_INSTANCE_OWNERSHIP::ACTION::")
+        print("::PRINT::CHANGE_INSTANCE_OWNERSHIP::ACTION::")
 
         context = req.environ['nova.context']
         authorize(context)
