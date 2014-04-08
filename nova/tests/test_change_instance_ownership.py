@@ -148,11 +148,11 @@ class ChangeInstanceOwnershipTestCase(test.TestCase):
 
         fakes.HTTPRequest.blank('/v2/fake/os-floating-ips')
 
-        #kwargs = {}
-        #kwargs['base_url'] = 'http://localhost/v2'
-        #req = os_wsgi.Request.blank('/%s/os-change-instance-ownership/%s' % (project_owner_id, instance_uuid), kwargs)
-        #req.environ['nova.context'] = self.context
-        req = fakes.HTTPRequest.blank('/%s/os-change-instance-ownership/%s' % (project_owner_id, instance_uuid))
+        kwargs = {}
+        kwargs['base_url'] = 'http://localhost/v2'
+        req = os_wsgi.Request.blank('/%s/os-change-instance-ownership/%s' % (project_owner_id, instance_uuid), kwargs)
+        req.environ['nova.context'] = self.context
+        #req = fakes.HTTPRequest.blank('/%s/os-change-instance-ownership/%s' % (project_owner_id, instance_uuid))
         print("Request")
         print(req)
 
