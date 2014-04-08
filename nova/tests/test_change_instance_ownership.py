@@ -156,7 +156,7 @@ class ChangeInstanceOwnershipTestCase(test.TestCase):
         print(req.__dict__)
         print(req._headers)
         print(req.params)
-        print(req.headers)
+        print(dir(req.headers))
         print(dir(req))
 
         body = dict(user_id=self.user02.id)
