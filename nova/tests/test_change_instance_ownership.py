@@ -38,6 +38,7 @@ from nova.api.openstack.compute.contrib.change_instance_ownership import ChangeI
 from oslo.config import cfg
 
 from keystoneclient.v3 import client
+from novaclient import import client as novaclient
 
 from nova.openstack.common import log as logging
 
@@ -65,7 +66,8 @@ class ChangeInstanceOwnershipTestCase(test.TestCase):
 
         cls.controller = ChangeInstanceOwnershipController()
 
-        cls.keystone = client.Client(username="admin", password="admin", auth_url="http://127.0.0.1:5000/v3/")
+        cls.keystone = client.Client(username="admin", password="admin")
+        #cls.nova = novaclient.Client(username="admin", password="admin", auth_url="http://127.0.0.1:5000/v3/")
 
         cls.project01 = cls.keystone.projects.create("project01", None)
         cls.user01    = cls.keystone.users.create("user01", project="admin")
@@ -126,7 +128,7 @@ class ChangeInstanceOwnershipTestCase(test.TestCase):
     def test_case_one(self):
         print("Test")
         self.context = context.get_admin_context()
-        self.context = context.RequestContext('admin', 'admin')
+        #self.context = context.RequestContext('admin', 'admin')
         print("Context")
         print(self.context.to_dict())
 
