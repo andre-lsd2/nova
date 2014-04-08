@@ -42,10 +42,17 @@ class ChangeInstanceOwnershipController(object):
 
         owner_id = context.user_id
 
-        #keystone_client = client.Client(token=context.auth_token, auth_url="http://10.1.0.32:5000/v3")
+        keystone_client = client.Client(token=context.auth_token, auth_url="http://10.1.0.32:5000/v3")
 
-        user_id = body['user_id'] if 'user_id' in body else owner_id
-        project_id = body['project_id'] if 'project_id' in body else instance.project_id
+        user_id = None
+        if ('user_id' in body):
+            user_id = body['user_id'] if 'user_id' in body else owner_id
+        project_id = None
+        if ('project_id' in body):
+            project_id = body['project_id'] if 'project_id' in body else instance.project_id
+
+        #user_id = body['user_id'] if 'user_id' in body else owner_id
+        #project_id = body['project_id'] if 'project_id' in body else instance.project_id
 
         LOG.debug("::DEBUG::CHANGE_INSTANCE_OWNERSHIP::ACTION::USER_ID::%s::PROJECT_ID::%s::" % (user_id, project_id))
         print("::PRINT::CHANGE_INSTANCE_OWNERSHIP::ACTION::USER_ID::%s::PROJECT_ID::%s::" % (user_id, project_id))
