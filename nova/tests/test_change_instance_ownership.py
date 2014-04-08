@@ -140,7 +140,12 @@ class ChangeInstanceOwnershipTestCase(test.TestCase):
         kwargs['base_url'] = 'http://localhost/v2'
         req = os_wsgi.Request.blank('/%s/os-change-instance-ownership/%s' % (project_owner_id, instance_uuid), kwargs)
         req.environ['nova.context'] = self.context
+        print("Request")
+        print(req)
+
         body = dict(user_id=self.user02.id)
+        print("BODY")
+        print(body)
 
         self.controller.action(req, id, body)
 
