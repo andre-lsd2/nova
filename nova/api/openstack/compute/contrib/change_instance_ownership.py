@@ -50,7 +50,7 @@ class ChangeInstanceOwnershipController(object):
         compat_catalog = None
         compat_catalog = {'token': {'catalog': context.service_catalog,'methods': ''}}
 
-        sc = access.AccessInfo.factory(None, compat_catalog)
+        sc = access.AccessInfo.factory(None, compat_catalog).service_catalog
 
         print("TESTING: %s" % access.AccessInfo.factory(None, compat_catalog))
         print("TESTING: %s" % sc.__dict__)
