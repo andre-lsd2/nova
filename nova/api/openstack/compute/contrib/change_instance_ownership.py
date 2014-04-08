@@ -44,6 +44,11 @@ class ChangeInstanceOwnershipController(object):
 
         keystone_client = client.Client(token=context.auth_token, auth_url="http://10.1.0.32:5000/v3")
 
+        LOG.debug("::DEBUG::CHANGE_INSTANCE_OWNERSHIP::ACTION::BODY::")
+        print("::PRINT::CHANGE_INSTANCE_OWNERSHIP::ACTION::BODY::")
+
+
+
         LOG.debug("::DEBUG::CHANGE_INSTANCE_OWNERSHIP::ACTION::BODY::" % body)
 
         user_id = None
