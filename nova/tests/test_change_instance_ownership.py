@@ -154,6 +154,7 @@ class ChangeInstanceOwnershipTestCase(test.TestCase):
         #req = fakes.HTTPRequest.blank('/%s/os-change-instance-ownership/%s' % (project_owner_id, instance_uuid))
         print("Request")
         print(req.__dict__)
+        print(req._headers)
         print(dir(req))
 
         body = dict(user_id=self.user02.id)
