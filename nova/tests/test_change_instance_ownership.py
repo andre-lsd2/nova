@@ -160,13 +160,13 @@ class ChangeInstanceOwnershipTestCase(test.TestCase):
         print(dir(req))
 
         body = dict(user_id=self.user02.id)
-        print("BODY")
-        print(body)
+        #print("BODY")
+        #print(body)
 
-        print("Controller")
-        print(self.controller)
+        #print("Controller")
+        #print(self.controller)
 
-        self.controller.action(req, instance_uuid, body)
+        #self.controller.action(req, instance_uuid, body)
 
         self.assertEquals(1, 2)
 
