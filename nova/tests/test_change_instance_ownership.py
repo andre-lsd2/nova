@@ -139,6 +139,9 @@ class ChangeInstanceOwnershipTestCase(test.TestCase):
         print("Instance")
         print(instance)
 
+        #db.instance_get_by_uuid(context, id)
+        print(db.instance_get_all(context))
+
         instance_uuid = instance.uuid
         project_owner_id = instance.project_id
 
