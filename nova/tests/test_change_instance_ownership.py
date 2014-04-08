@@ -124,6 +124,7 @@ class ChangeInstanceOwnershipTestCase(test.TestCase):
                 return i
 
     def test_case_one(self):
+        print("Test")
         self.context = context.get_admin_context()
 
         instance = self._create_instance("4c86bbe1f01b4462af3b62e21c2485d1", "090510f9a96049a9a31b1648c45d03d8")
