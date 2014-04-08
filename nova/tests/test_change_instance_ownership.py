@@ -100,8 +100,9 @@ class ChangeInstanceOwnershipTestCase(test.TestCase):
         inst = {}
         inst['user_id'] = user_id
         inst['project_id'] = project_id
+        i = db.instance_create(self.context, inst)
 
-        return db.instance_create(self.context, inst)
+        return db.instance_get_by_uuid(self.context, i.uuid)
 
     def _send_server_action_request(self, url, body):
         app = openstack_compute.APIRouter(init_only=('servers',))
