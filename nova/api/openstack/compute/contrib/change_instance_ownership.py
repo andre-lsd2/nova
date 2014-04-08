@@ -46,7 +46,7 @@ class ChangeInstanceOwnershipController(object):
 
         owner_id = context.user_id
 
-        sc = access.AccessInfo.factory(None, compat_catalog).service_catalog
+        #sc = access.AccessInfo.factory(None, compat_catalog).service_catalog
 
         keystone_client = client.Client(token=context.auth_token, auth_url="http://10.1.0.32:5000/v3")
 
