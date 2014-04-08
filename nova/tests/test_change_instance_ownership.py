@@ -129,9 +129,9 @@ class ChangeInstanceOwnershipTestCase(test.TestCase):
         print("Context")
         print(self.context.to_dict())
 
-        instance = self._create_instance("4c86bbe1f01b4462af3b62e21c2485d1", "090510f9a96049a9a31b1648c45d03d8")
+        instance = self._create_instance("6289b12599924beaa00da02f785eebc0", "d131facb1ec74024b88b4987b2ef3753")
         print("Instance")
-        print(instance.to_dict())
+        #print(instance.to_dict())
 
         instance_uuid = instance.uuid
         project_owner_id = instance.project_id
