@@ -21,6 +21,7 @@ from nova import quota
 from nova.openstack.common.gettextutils import _
 from nova.openstack.common import log as logging
 from keystoneclient.v3 import client
+from keystoneclient import access
 # from keystoneclient.v3 import tenants
 
 LOG = logging.getLogger(__name__)
@@ -44,6 +45,8 @@ class ChangeInstanceOwnershipController(object):
         instance = db.instance_get_by_uuid(context, id)
 
         owner_id = context.user_id
+
+        sc = access.AccessInfo.factory(None, compat_catalog).service_catalog
 
         keystone_client = client.Client(token=context.auth_token, auth_url="http://10.1.0.32:5000/v3")
 
