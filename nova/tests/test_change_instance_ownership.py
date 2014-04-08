@@ -125,7 +125,8 @@ class ChangeInstanceOwnershipTestCase(test.TestCase):
 
     def test_case_one(self):
         print("Test")
-        self.context = context.get_admin_context()
+        #self.context = context.get_admin_context()
+        self.context = context.RequestContext('admin', 'admin')
         print("Context")
         print(self.context.to_dict())
 
