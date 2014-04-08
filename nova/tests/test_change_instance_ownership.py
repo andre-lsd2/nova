@@ -38,7 +38,7 @@ from nova.api.openstack.compute.contrib.change_instance_ownership import ChangeI
 from oslo.config import cfg
 
 from keystoneclient.v3 import client
-from novaclient import client as novaclient
+#from novaclient import client as novaclient
 
 from nova.openstack.common import log as logging
 
