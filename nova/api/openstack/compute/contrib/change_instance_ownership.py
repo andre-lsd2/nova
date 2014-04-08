@@ -32,19 +32,17 @@ class ChangeInstanceOwnershipController(object):
 
     def action(self, req, id, body):
 
-        LOG.debug("::DEBUG::CHANGE_INSTANCE_OWNERSHIP::ACTION::")
         print("::PRINT::CHANGE_INSTANCE_OWNERSHIP::ACTION::")
 
         context = req.environ['nova.context']
         authorize(context)
 
-        instance = db.instance_get_by_uuid(context, id)
+        #instance = db.instance_get_by_uuid(context, id)
 
         owner_id = context.user_id
 
         #keystone_client = client.Client(token=context.auth_token, auth_url="http://10.1.0.32:5000/v3")
 
-        LOG.debug("::DEBUG::CHANGE_INSTANCE_OWNERSHIP::ACTION::BODY::")
         print("::PRINT::CHANGE_INSTANCE_OWNERSHIP::ACTION::BODY::")
 
 
