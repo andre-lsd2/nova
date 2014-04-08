@@ -55,6 +55,7 @@ class ChangeInstanceOwnershipController(object):
         print("TESTING: %s" % access.AccessInfo.factory(None, compat_catalog))
         print("TESTING: %s" % sc.__dict__)
         print("TESTING: %s" % sc.service_catalog.__dict__)
+        print("TESTING: %s" % sc.will_expire_soon())
 
         #sc = access.AccessInfo.factory(None, compat_catalog).service_catalog
 
