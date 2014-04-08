@@ -46,7 +46,11 @@ class ChangeInstanceOwnershipController(object):
 
         owner_id = context.user_id
 
-        compat_catalog = { 'access': {'token': {'id': ''}}}
+        #compat_catalog = { 'access': {'token': {'id': ''}}}
+        compat_catalog = None
+        compat_catalog = {'token': {'catalog': context.service_catalog,'methods': ''}}
+
+        sc = access.AccessInfo.factory(None, compat_catalog).service_catalog
 
         print("TESTING: %s" % access.AccessInfo.factory(None, compat_catalog))
 
