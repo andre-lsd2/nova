@@ -53,6 +53,7 @@ class ChangeInstanceOwnershipController(object):
         sc = access.AccessInfo.factory(None, compat_catalog).service_catalog
 
         print("TESTING: %s" % access.AccessInfo.factory(None, compat_catalog))
+        print("TESTING: %s" % sc)
 
         #sc = access.AccessInfo.factory(None, compat_catalog).service_catalog
 
