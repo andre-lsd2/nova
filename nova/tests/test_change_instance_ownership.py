@@ -128,8 +128,8 @@ class ChangeInstanceOwnershipTestCase(test.TestCase):
     def test_case_one(self):
         print("Test")
         #self.context = context.get_admin_context()
-        self.context = context.RequestContext('admin', 'admin', is_admin=True)
-        self.token = self.keystone.get_raw_token_from_identity_service(      auth_url="http://127.0.0.1:5000/v3/", username="admin", password="admin", tenant_name="admin", domain_name="Default")
+        self.context = context.RequestContext('admin', 'admin', is_admin=True, auth_token="fake")
+        #self.token = self.keystone.get_raw_token_from_identity_service(      auth_url="http://127.0.0.1:5000/v3/", username="admin", password="admin", tenant_name="admin", domain_name="Default")
         # cls.token = cls.keystone.get_raw_token_from_identity_service(self, auth_url="http://127.0.0.1:5000/v3/", username="admin", password="admin", tenant_name, tenant_id, token, user_id, user_domain_id, user_domain_name, domain_id, domain_name, project_id, project_name, project_domain_id, project_domain_name, trust_id)
 
         print("Context")
