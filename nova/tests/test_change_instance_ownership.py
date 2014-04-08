@@ -158,15 +158,7 @@ class ChangeInstanceOwnershipTestCase(test.TestCase):
         req.environ['nova.context'] = self.context
         #req = fakes.HTTPRequest.blank('/%s/os-change-instance-ownership/%s' % (project_owner_id, instance_uuid))
         print("Request")
-        print(req.__dict__)
-        print(req._headers)
-        print(req.params)
-        print(dir(req.headers))
-        print(req.headers__dict__)
-        print(dir(req))
-
-        print("TOKEN")
-        print(self.token)
+        print(req)
 
         body = dict(user_id=self.user02.id)
         #print("BODY")
