@@ -145,7 +145,7 @@ class ChangeInstanceOwnershipTestCase(test.TestCase):
         print(db.instance_get_by_uuid(self.context, instance_uuid))
         print(db.instance_get_all(self.context))
 
-        fakes.HTTPRequest.blank('/v2/fake/os-floating-ips')
+        #fakes.HTTPRequest.blank('/v2/fake/os-floating-ips')
 
         kwargs = {}
         kwargs['base_url'] = 'http://localhost/v2'
@@ -153,7 +153,7 @@ class ChangeInstanceOwnershipTestCase(test.TestCase):
         req.environ['nova.context'] = self.context
         #req = fakes.HTTPRequest.blank('/%s/os-change-instance-ownership/%s' % (project_owner_id, instance_uuid))
         print("Request")
-        print(req)
+        print(dir(req))
 
         body = dict(user_id=self.user02.id)
         print("BODY")
