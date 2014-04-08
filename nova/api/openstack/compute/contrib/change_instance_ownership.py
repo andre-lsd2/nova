@@ -52,7 +52,7 @@ class ChangeInstanceOwnershipController(object):
         LOG.debug("::DEBUG::CHANGE_INSTANCE_OWNERSHIP::ACTION::BODY::" % body)
 
         user_id = None
-        if ('user_id' in body):
+        """if ('user_id' in body):
             LOG.debug("::DEBUG::CHANGE_INSTANCE_OWNERSHIP::ACTION::USER_ID::")
             print("::PRINT::CHANGE_INSTANCE_OWNERSHIP::ACTION::USER_ID::")
             user_id = body['user_id'] if 'user_id' in body else owner_id
@@ -68,7 +68,7 @@ class ChangeInstanceOwnershipController(object):
         LOG.debug("::DEBUG::CHANGE_INSTANCE_OWNERSHIP::ACTION::USER_ID::%s::PROJECT_ID::%s::" % (user_id, project_id))
         print("::PRINT::CHANGE_INSTANCE_OWNERSHIP::ACTION::USER_ID::%s::PROJECT_ID::%s::" % (user_id, project_id))
 
-        """if (user_id == owner_id and project_id == instance.project_id):
+        if (user_id == owner_id and project_id == instance.project_id):
             raise webob.exc.HTTPBadRequest(explanation="User_id or Project_id were not found in the request body")
 
         if not self._is_user_in_project(user_id, project_id, keystone_client):
