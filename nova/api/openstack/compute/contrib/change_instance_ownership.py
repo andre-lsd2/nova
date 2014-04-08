@@ -31,7 +31,11 @@ QUOTAS = quota.QUOTAS
 class ChangeInstanceOwnershipController(object):
 
     def action(self, req, id, body):
-        context = req.environ['nova.context']
+
+        LOG.debug("::DEBUG::CHANGE_INSTANCE_OWNERSHIP::ACTION::")
+        print("::DEBUG::CHANGE_INSTANCE_OWNERSHIP::ACTION::")
+
+        """context = req.environ['nova.context']
         authorize(context)
 
         instance = db.instance_get_by_uuid(context, id)
@@ -47,7 +51,7 @@ class ChangeInstanceOwnershipController(object):
             raise webob.exc.HTTPBadRequest(explanation="User_id or Project_id were not found in the request body")
 
         if not self._is_user_in_project(user_id, project_id, keystone_client):
-            raise webob.exc.HTTPBadRequest(explanation="User_id or Project_id were not found in the request body")
+            raise webob.exc.HTTPBadRequest(explanation="User_id or Project_id were not found in the request body")"""
 
     def _commit(self, instance, context, body, id, user_id=None, project_id=None):
         instance_project_id = instance.project_id
