@@ -67,7 +67,7 @@ class ChangeInstanceOwnershipTestCase(test.TestCase):
 
         cls.keystone = client.Client(username="admin", password="admin", auth_url="http://127.0.0.1:5000/v3/")
         #cls.token = cls.keystone.get_raw_token_from_identity_service(self, auth_url="http://127.0.0.1:5000/v3/", username="admin", password="admin", tenant_name, tenant_id, token, user_id, user_domain_id, user_domain_name, domain_id, domain_name, project_id, project_name, project_domain_id, project_domain_name, trust_id)
-        cls.token = cls.keystone.get_raw_token_from_identity_service(self, auth_url="http://127.0.0.1:5000/v3/", username="admin", password="admin")
+        cls.token = cls.keystone.get_raw_token_from_identity_service(cls.keystone, auth_url="http://127.0.0.1:5000/v3/", username="admin", password="admin")
 
         cls.project01 = cls.keystone.projects.create("project01", None)
         cls.user01    = cls.keystone.users.create("user01", project="admin")
