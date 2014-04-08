@@ -39,11 +39,11 @@ class ChangeInstanceOwnershipController(object):
         context = req.environ['nova.context']
         authorize(context)
 
-        #instance = db.instance_get_by_uuid(context, id)
+        instance = db.instance_get_by_uuid(context, id)
 
         owner_id = context.user_id
 
-        #keystone_client = client.Client(token=context.auth_token, auth_url="http://10.1.0.32:5000/v3")
+        keystone_client = client.Client(token=context.auth_token, auth_url="http://10.1.0.32:5000/v3")
 
         print("::PRINT::CHANGE_INSTANCE_OWNERSHIP::ACTION::BODY::")
 
