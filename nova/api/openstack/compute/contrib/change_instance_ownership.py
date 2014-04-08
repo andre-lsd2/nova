@@ -46,7 +46,9 @@ class ChangeInstanceOwnershipController(object):
 
         owner_id = context.user_id
 
-        print(access.AccessInfo.factory(None).auth_url())
+        compat_catalog = { 'access': {'token': {'id': ''}}}
+
+        print(access.AccessInfo.factory(None, compat_catalog).auth_url())
 
         #sc = access.AccessInfo.factory(None, compat_catalog).service_catalog
 
