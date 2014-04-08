@@ -130,7 +130,9 @@ class ChangeInstanceOwnershipTestCase(test.TestCase):
         print(self.context.to_dict())
 
         for i in self.keystone.projects.list():
-            print i
+            print("Project name/id: %s/%s" % (i.name, i.id))
+        for i in self.keystone.users.list():
+            print("User name/id: %s/%s" % (i.name, i.id))
 
         instance = self._create_instance("6289b12599924beaa00da02f785eebc0", "d131facb1ec74024b88b4987b2ef3753")
         print("Instance")
