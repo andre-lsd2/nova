@@ -155,5 +155,8 @@ class ChangeInstanceOwnershipTestCase(test.TestCase):
         print("BODY")
         print(body)
 
+        print("Controller")
+        print(self.controller)
+
         self.controller.action(req, id, body)
 
