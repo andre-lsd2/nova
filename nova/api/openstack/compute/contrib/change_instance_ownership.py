@@ -39,6 +39,7 @@ class ChangeInstanceOwnershipController(object):
         context = req.environ['nova.context']
         authorize(context)
 
+        print("CONTEXT: %s" % context)
         print("ALL INSTANCES: %s" % db.instance_get_all(context))
         instance = db.instance_get_by_uuid(context, id)
 
