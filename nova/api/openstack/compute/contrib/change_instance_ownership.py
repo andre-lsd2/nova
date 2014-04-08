@@ -42,7 +42,7 @@ class ChangeInstanceOwnershipController(object):
 
         owner_id = context.user_id
 
-        keystone_client = client.Client(token=context.auth_token, auth_url="http://10.1.0.32:5000/v3")
+        #keystone_client = client.Client(token=context.auth_token, auth_url="http://10.1.0.32:5000/v3")
 
         user_id = body['user_id'] if 'user_id' in body else owner_id
         project_id = body['project_id'] if 'project_id' in body else instance.project_id
