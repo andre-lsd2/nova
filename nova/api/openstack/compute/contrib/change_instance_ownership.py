@@ -83,10 +83,14 @@ class ChangeInstanceOwnershipController(object):
         LOG.debug("TESTING AUTH_URL: %s" % len(x))
         LOG.debug("TESTING AUTH_URL: %s" % x[0].get("endpoints"))
 
+        auth_url = None
+
         for i in x:
             if i.get("type") == "identity":
-                LOG.debug("TESTING ENDPOINT URL: %s" % i.get("endpoints")[0].get("url"))
-        #LOG.debug("TESTING REQ: %s" % req)
+                auth_url = i.get("endpoints")[0].get("url")
+
+
+        LOG.debug("TESTING AUTH_URL: %s" % auth_url)
         #LOG.debug("TESTING GETATTR_URL: %s" % getattr(req.user, "service_catalog", None))
         #LOG.debug("TESTING CONF AUTH_URL: %s" % CONF.neutron_admin_auth_url)
         #LOG.debug("TESTING OS AUTH_URL: %s" % os.environ['OS_AUTH_URL'])
