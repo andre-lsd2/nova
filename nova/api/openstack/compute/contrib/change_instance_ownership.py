@@ -73,8 +73,9 @@ class ChangeInstanceOwnershipController(object):
                     if j.get("interface") == "public":
                         auth_url = j.get("url")
 
-
+        auth_url = "http://10.1.0.32:5000/v2.0"
         LOG.debug("TESTING AUTH_URL: %s" % auth_url)
+
 
         #sc = access.AccessInfo.factory(None, compat_catalog).service_catalog
 
