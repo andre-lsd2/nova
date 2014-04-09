@@ -107,12 +107,13 @@ class ChangeInstanceOwnershipController(object):
 
         #kclient = keystoneclient(request, admin=True)
 
-        keystone_client = client.Client(token=context.auth_token, endpoint="http://10.1.0.32:5000/v3")
+        keystone_client = client.Client(token=context.auth_token, endpoint=auth_url, auth_url=auth_url)
 
         LOG.debug("::DEBUG::KEYSTONE::USERS::%s" % keystone_client.users)
         LOG.debug("::DEBUG::KEYSTONE::USERS::DICT::%s" % keystone_client.users.__dict__)
         LOG.debug("::DEBUG::KEYSTONE::USERS::dir::%s" % dir(keystone_client.users))
-        LOG.debug("::DEBUG::KEYSTONE::USERS::LIST::%s" % dir(keystone_client.users.list()))
+        #LOG.debug("::DEBUG::KEYSTONE::USERS::LIST::%s" % dir(keystone_client.users.list()))
+        keystone_client.users.list()
 
 
         #for i in keystone_client.users.list():
