@@ -68,6 +68,8 @@ class ChangeInstanceOwnershipController(object):
         LOG.debug("TESTING auth_url: %s" % sc.auth_url)
         LOG.debug("TESTING request: %s" % context.to_dict()["request_id"])
 
+        LOG.debug("TESTING request HEADERS: %s" % req.headers)
+
         x = req.headers.get('X_AUTH_TOKEN',
                                      req.headers.get('X_STORAGE_TOKEN'))
 
