@@ -65,6 +65,8 @@ class ChangeInstanceOwnershipController(object):
         LOG.debug("TESTING: %s" % sc.__dict__)
         LOG.debug("TESTING: %s" % sc.service_catalog.__dict__)
         LOG.debug("TESTING: %s" % sc.auth_token)
+        LOG.debug("TESTING auth_url: %s" % sc.auth_url)
+
 
         #sc = access.AccessInfo.factory(None, compat_catalog).service_catalog
 
