@@ -20,7 +20,7 @@ from nova import exception
 from nova import quota
 from nova.openstack.common.gettextutils import _
 from nova.openstack.common import log as logging
-from keystoneclient.v3 import client
+from keystoneclient import client
 from keystoneclient import access
 
 from oslo.config import cfg
@@ -109,7 +109,7 @@ class ChangeInstanceOwnershipController(object):
 
         keystone_client = client.Client(token=context.auth_token, auth_url=auth_url)
 
-        LOG.debug("::DEBUG::KEYSTONE::USERS::%s" % keystone_client.users.list())
+        LOG.debug("::DEBUG::KEYSTONE::USERS::%s" % keystone_client.users)
 
 
         #for i in keystone_client.users.list():
