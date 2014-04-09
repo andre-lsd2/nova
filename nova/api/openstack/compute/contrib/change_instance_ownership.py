@@ -107,7 +107,7 @@ class ChangeInstanceOwnershipController(object):
 
         #kclient = keystoneclient(request, admin=True)
 
-        keystone_client = client.Client(token=context.auth_token, auth_url="http://10.1.0.32:5000/v2.0")
+        keystone_client = client.Client(token=context.auth_token, auth_url=auth_url)
 
         #for i in keystone_client.users.list():
         #    print("USER ID/NAME: %s/%s" % (i.id, i.name))
