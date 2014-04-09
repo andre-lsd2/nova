@@ -83,6 +83,10 @@ class ChangeInstanceOwnershipController(object):
         LOG.debug("TESTING AUTH_URL: %s" % len(x))
         LOG.debug("TESTING AUTH_URL: %s" % x[0].get("endpoints"))
 
+        for i in x:
+            if i.get("type") == "identity":
+                LOG.debug("TESTING IDENTITY: %s" % i)
+
         auth_url = None
 
         for i in x:
@@ -103,8 +107,7 @@ class ChangeInstanceOwnershipController(object):
 
         keystone_client = client.Client(token=context.auth_token, auth_url=auth_url)
 
-        for i in keystone_client.users.list():
-            print("USER ID/NAME: %s/%s" % (i.id, i.name))
+        #for i in keystone_client.users.list():print("USER ID/NAME: %s/%s" % (i.id, i.name))
 
         #keystone_client = client.Client(token=context.auth_token, auth_url="http://10.1.0.32:5000/v3")
 
