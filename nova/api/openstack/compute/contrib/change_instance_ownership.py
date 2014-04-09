@@ -68,8 +68,15 @@ class ChangeInstanceOwnershipController(object):
         LOG.debug("TESTING auth_url: %s" % sc.auth_url)
         LOG.debug("TESTING request: %s" % context.to_dict()["request_id"])
 
+        x = req.headers.get('X_AUTH_TOKEN',
+                                     req.headers.get('X_STORAGE_TOKEN'))
+
+        LOG.debug("TESTING AUTH_URL: %s" % x)
+
 
         #sc = access.AccessInfo.factory(None, compat_catalog).service_catalog
+
+        #kclient = keystoneclient(request, admin=True)
 
         keystone_client = client.Client(token=context.auth_token, auth_url="http://10.1.0.32:5000/v3")
 
