@@ -23,11 +23,11 @@ from nova.openstack.common import log as logging
 from keystoneclient.v3 import client
 from keystoneclient import access
 
-#from oslo.config import cf
+from oslo.config import cfg
 import os
 
 
-#CONF = cfg.CONF
+CONF = cfg.CONF
 
 LOG = logging.getLogger(__name__)
 
@@ -79,8 +79,8 @@ class ChangeInstanceOwnershipController(object):
                                      req.headers.get('X_STORAGE_TOKEN'))
 
         LOG.debug("TESTING AUTH_URL: %s" % x)
-        #LOG.debug("TESTING CONF AUTH_URL: %s" % CONF.neutron_admin_auth_url)
-        LOG.debug("TESTING OS AUTH_URL: %s" % os.environ['OS_AUTH_URL'])
+        LOG.debug("TESTING CONF AUTH_URL: %s" % CONF.neutron_admin_auth_url)
+        #LOG.debug("TESTING OS AUTH_URL: %s" % os.environ['OS_AUTH_URL'])
 
 
 
