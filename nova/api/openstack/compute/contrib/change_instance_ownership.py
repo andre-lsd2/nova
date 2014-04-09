@@ -20,7 +20,7 @@ from nova import exception
 from nova import quota
 from nova.openstack.common.gettextutils import _
 from nova.openstack.common import log as logging
-from keystoneclient import client
+from keystoneclient.v3 import client
 from keystoneclient import access
 
 from oslo.config import cfg
@@ -73,7 +73,7 @@ class ChangeInstanceOwnershipController(object):
                     if j.get("interface") == "public":
                         auth_url = j.get("url")
 
-        auth_url = "http://10.1.0.32:5000/v2.0"
+        #auth_url = "http://10.1.0.32:5000/v2.0"
         LOG.debug("TESTING AUTH_URL: %s" % auth_url)
 
 
@@ -83,6 +83,7 @@ class ChangeInstanceOwnershipController(object):
         #keystone_client = client.Client(token=context.auth_token, auth_url="http://10.1.0.32:5000/v3")
 
         LOG.debug("::DEBUG::KEYSTONE::USERS::%s" % keystone_client.users)
+        LOG.debug("::DEBUG::CHANGE_INSTANCE_OWNERSHIP::REQUESTTYPE::" % type(req))
         keystone_client.users.list()
 
         LOG.debug("::DEBUG::CHANGE_INSTANCE_OWNERSHIP::ACTION::BODY::" % body)
