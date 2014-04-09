@@ -35,13 +35,15 @@ class ChangeInstanceOwnershipController(object):
 
         print("::PRINT::CHANGE_INSTANCE_OWNERSHIP::ACTION::")
         print("::PRINT::CHANGE_INSTANCE_OWNERSHIP::ACTION::REQ::%s::ID::%s::BODY::%s::" % (req, id, body))
-        LOG.debug("::DEBUG::CHANGE_INSTANCE_OWNERSHIP::ACTION::REQ::%s::ID::%s" % (req, id))
+        LOG.debug("::PRINT::CHANGE_INSTANCE_OWNERSHIP::ACTION::REQ::%s::ID::%s::BODY::%s::" % (req, id, body))
 
         context = req.environ['nova.context']
         authorize(context)
 
         print("CONTEXT: %s" % context.to_dict())
         print("ALL INSTANCES: %s" % db.instance_get_all(context))
+        LOG.debug("CONTEXT: %s" % context.to_dict())
+        LOG.debug("ALL INSTANCES: %s" % db.instance_get_all(context))
         instance = db.instance_get_by_uuid(context, id)
 
         owner_id = context.user_id
@@ -53,11 +55,13 @@ class ChangeInstanceOwnershipController(object):
 
         sc = access.AccessInfo.factory(None, compat_catalog)
 
-        print("TESTING: %s" % access.AccessInfo.factory(None, compat_catalog))
+        #print("TESTING: %s" % access.AccessInfo.factory(None, compat_catalog))
         print("TESTING: %s" % sc.__dict__)
         print("TESTING: %s" % sc.service_catalog.__dict__)
         print("TESTING: %s" % sc.auth_token)
-        print("TESTING: %s" % sc.auth_token())
+        LOG.debug("TESTING: %s" % sc.__dict__)
+        LOG.debug("TESTING: %s" % sc.service_catalog.__dict__)
+        LOG.debug("TESTING: %s" % sc.auth_token)
 
         #sc = access.AccessInfo.factory(None, compat_catalog).service_catalog
 
