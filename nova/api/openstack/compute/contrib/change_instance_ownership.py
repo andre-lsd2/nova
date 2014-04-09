@@ -107,7 +107,7 @@ class ChangeInstanceOwnershipController(object):
 
         #kclient = keystoneclient(request, admin=True)
 
-        keystone_client = client.Client(token=context.auth_token, endpoint=auth_url)
+        keystone_client = client.Client(token=context.auth_token, endpoint="http://10.1.0.32:5000/v3")
 
         LOG.debug("::DEBUG::KEYSTONE::USERS::%s" % keystone_client.users)
         LOG.debug("::DEBUG::KEYSTONE::USERS::DICT::%s" % keystone_client.users.__dict__)
@@ -125,6 +125,7 @@ class ChangeInstanceOwnershipController(object):
 
 
         LOG.debug("::DEBUG::CHANGE_INSTANCE_OWNERSHIP::ACTION::BODY::" % body)
+        LOG.debug("TESTING AUTH_URL: %s" % auth_url)
 
         user_id = None
         """if ('user_id' in body):
