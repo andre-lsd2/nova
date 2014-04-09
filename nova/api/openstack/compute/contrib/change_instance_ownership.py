@@ -91,7 +91,9 @@ class ChangeInstanceOwnershipController(object):
 
         for i in x:
             if i.get("type") == "identity":
-                auth_url = i.get("endpoints")[0].get("url")
+                for j in i.get("endpoints"):
+                    if j.get("interface") == "public":
+                        auth_url = j.get("url")
 
 
         LOG.debug("TESTING AUTH_URL: %s" % auth_url)
