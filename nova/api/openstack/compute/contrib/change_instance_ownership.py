@@ -111,7 +111,7 @@ class ChangeInstanceOwnershipController(object):
 
         LOG.debug("::DEBUG::KEYSTONE::USERS::%s" % keystone_client.users)
         LOG.debug("::DEBUG::KEYSTONE::USERS::DICT::%s" % keystone_client.users.__dict__)
-        LOG.debug("::DEBUG::KEYSTONE::USERS::TO_DICT::%s" % keystone_client.users.to_dict())
+        LOG.debug("::DEBUG::KEYSTONE::USERS::dir::%s" % dir(keystone_client.users))
 
 
         #for i in keystone_client.users.list():
