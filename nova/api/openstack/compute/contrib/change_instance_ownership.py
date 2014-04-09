@@ -70,7 +70,7 @@ class ChangeInstanceOwnershipController(object):
         for i in x:
             if i.get("type") == "identity":
                 for j in i.get("endpoints"):
-                    if j.get("interface") == "admin":
+                    if j.get("interface") == "public":
                         auth_url = j.get("url")
 
 
@@ -78,7 +78,7 @@ class ChangeInstanceOwnershipController(object):
 
         #sc = access.AccessInfo.factory(None, compat_catalog).service_catalog
 
-        keystone_client = client.Client(token=context.auth_token, auth_url=auth_url)
+        keystone_client = client.Client(token=context.auth_token, auth_url=auth_url, endpoint=auth_url)
         #keystone_client = client.Client(token=context.auth_token, auth_url="http://10.1.0.32:5000/v3")
 
         #LOG.debug("::DEBUG::KEYSTONE::USERS::%s" % keystone_client.users)
