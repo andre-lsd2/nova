@@ -25,7 +25,7 @@ from keystoneclient import access
 
 from oslo.config import cfg
 import os
-
+import ast
 
 CONF = cfg.CONF
 
@@ -75,12 +75,10 @@ class ChangeInstanceOwnershipController(object):
 
         LOG.debug("TESTING request HEADERS: %s" % req.headers)
 
-        x = req.headers.get('X-Service-Catalog',
-                                     req.headers.get('X_STORAGE_TOKEN'))
+        x = req.headers.get('X-Service-Catalog', req.headers.get('X_STORAGE_TOKEN'))
 
         LOG.debug("TESTING AUTH_URL: %s" % x)
-        LOG.debug("TESTING AUTH_URL: %s" % len(x))
-        LOG.debug("TESTING AUTH_URL: %s" % getattr(x, "endpoints", "NAO"))
+        LOG.debug("TESTING AUTH_URL: %s" % ast.literal_eval(x))
         #LOG.debug("TESTING REQ: %s" % req)
         #LOG.debug("TESTING GETATTR_URL: %s" % getattr(req.user, "service_catalog", None))
         #LOG.debug("TESTING CONF AUTH_URL: %s" % CONF.neutron_admin_auth_url)
