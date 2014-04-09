@@ -78,7 +78,8 @@ class ChangeInstanceOwnershipController(object):
 
         #sc = access.AccessInfo.factory(None, compat_catalog).service_catalog
 
-        keystone_client = client.Client(token=context.auth_token, auth_url=auth_url)
+        #keystone_client = client.Client(token=context.auth_token, auth_url=auth_url)
+        keystone_client = client.Client(token=context.auth_token, auth_url="http://10.1.0.32:5000/v3")
 
         LOG.debug("::DEBUG::KEYSTONE::USERS::%s" % keystone_client.users)
         LOG.debug("::DEBUG::KEYSTONE::USERS::DICT::%s" % keystone_client.users.__dict__)
