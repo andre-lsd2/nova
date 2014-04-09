@@ -44,6 +44,8 @@ class ChangeInstanceOwnershipController(object):
         print("ALL INSTANCES: %s" % db.instance_get_all(context))
         LOG.debug("CONTEXT: %s" % context.to_dict())
         LOG.debug("CONTEXT: %s" % context.to_dict().keys())
+        LOG.debug("CONTEXT: %s" % context.to_dict()['remote_address'])
+        LOG.debug("CONTEXT: %s" % context.to_dict()['service_catalog'])
         LOG.debug("ALL INSTANCES: %s" % db.instance_get_all(context))
         instance = db.instance_get_by_uuid(context, id)
 
