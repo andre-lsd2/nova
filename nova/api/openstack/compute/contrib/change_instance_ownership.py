@@ -50,9 +50,11 @@ class ChangeInstanceOwnershipController(object):
         owner_id = context.user_id
 
         #compat_catalog = { 'access': {'token': {'id': ''}}}
-        compat_catalog = None
-        compat_catalog = {'token': {'catalog': context.service_catalog,'methods': ''}}
-        compat_catalog = {'access': {'serviceCatalog': context.service_catalog,'token': {'id': ''}}}
+        #compat_catalog = None
+        #compat_catalog = {'token': {'catalog': context.service_catalog,'methods': ''}}
+        #compat_catalog = {'access': {'serviceCatalog': context.service_catalog,'token': {'id': ''}}}
+
+        #LOG.debug("CONTEXT: %s" % context.to_dict())
 
         x = req.headers.get('X-Service-Catalog', req.headers.get('X_STORAGE_TOKEN'))
 
@@ -68,7 +70,7 @@ class ChangeInstanceOwnershipController(object):
         for i in x:
             if i.get("type") == "identity":
                 for j in i.get("endpoints"):
-                    if j.get("interface") == "public":
+                    if j.get("interface") == "admin":
                         auth_url = j.get("url")
 
 
