@@ -20,7 +20,7 @@ from nova import exception
 from nova import quota
 from nova.openstack.common.gettextutils import _
 from nova.openstack.common import log as logging
-from keystoneclient import client
+from keystoneclient.v3 import client
 from keystoneclient import access
 
 from oslo.config import cfg
