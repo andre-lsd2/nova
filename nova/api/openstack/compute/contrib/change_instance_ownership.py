@@ -109,6 +109,9 @@ class ChangeInstanceOwnershipController(object):
 
         keystone_client = client.Client(token=context.auth_token, auth_url=auth_url)
 
+        LOG.debug("::DEBUG::KEYSTONE::USERS::%s" % keystone_client.users)
+
+
         #for i in keystone_client.users.list():
         #    print("USER ID/NAME: %s/%s" % (i.id, i.name))
 
