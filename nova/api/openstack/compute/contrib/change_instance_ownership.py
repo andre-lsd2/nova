@@ -82,7 +82,7 @@ class ChangeInstanceOwnershipController(object):
         #keystone_client = client.Client(token=context.auth_token, auth_url="http://10.1.0.32:5000/v3")
 
         #LOG.debug("::DEBUG::KEYSTONE::USERS::%s" % keystone_client.users)
-        keystone_client.users.list()
+        #keystone_client.users.list()
 
         LOG.debug("::DEBUG::CHANGE_INSTANCE_OWNERSHIP::ACTION::BODY::" % body)
 
