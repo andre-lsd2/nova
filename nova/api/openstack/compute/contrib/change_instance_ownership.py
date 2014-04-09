@@ -38,19 +38,12 @@ class ChangeInstanceOwnershipController(object):
 
     def action(self, req, id, body):
 
-        print("::PRINT::CHANGE_INSTANCE_OWNERSHIP::ACTION::")
-        print("::PRINT::CHANGE_INSTANCE_OWNERSHIP::ACTION::REQ::%s::ID::%s::BODY::%s::" % (req, id, body))
         LOG.debug("::PRINT::CHANGE_INSTANCE_OWNERSHIP::ACTION::REQ::%s::ID::%s::BODY::%s::" % (req, id, body))
 
         context = req.environ['nova.context']
         authorize(context)
 
-        print("CONTEXT: %s" % context.to_dict())
-        print("ALL INSTANCES: %s" % db.instance_get_all(context))
         LOG.debug("CONTEXT: %s" % context.to_dict())
-        LOG.debug("CONTEXT: %s" % context.to_dict().keys())
-        LOG.debug("CONTEXT: %s" % context.to_dict()['remote_address'])
-        LOG.debug("CONTEXT: %s" % context.to_dict()['service_catalog'])
         LOG.debug("ALL INSTANCES: %s" % db.instance_get_all(context))
         instance = db.instance_get_by_uuid(context, id)
 
@@ -61,27 +54,10 @@ class ChangeInstanceOwnershipController(object):
         compat_catalog = {'token': {'catalog': context.service_catalog,'methods': ''}}
         compat_catalog = {'access': {'serviceCatalog': context.service_catalog,'token': {'id': ''}}}
 
-        sc = access.AccessInfo.factory(None, compat_catalog)
-
-        #print("TESTING: %s" % access.AccessInfo.factory(None, compat_catalog))
-        print("TESTING: %s" % sc.__dict__)
-        print("TESTING: %s" % sc.service_catalog.__dict__)
-        print("TESTING: %s" % sc.auth_token)
-        LOG.debug("TESTING: %s" % sc.__dict__)
-        LOG.debug("TESTING: %s" % sc.service_catalog.__dict__)
-        LOG.debug("TESTING: %s" % sc.auth_token)
-        LOG.debug("TESTING auth_url: %s" % sc.auth_url)
-        LOG.debug("TESTING request: %s" % context.to_dict()["request_id"])
-
-        LOG.debug("TESTING request HEADERS: %s" % req.headers)
-
         x = req.headers.get('X-Service-Catalog', req.headers.get('X_STORAGE_TOKEN'))
 
         LOG.debug("TESTING AUTH_URL: %s" % x)
         x = ast.literal_eval(x)
-        LOG.debug("TESTING AUTH_URL: %s" % type(x))
-        LOG.debug("TESTING AUTH_URL: %s" % len(x))
-        LOG.debug("TESTING AUTH_URL: %s" % x[0].get("endpoints"))
 
         for i in x:
             if i.get("type") == "identity":
@@ -97,17 +73,10 @@ class ChangeInstanceOwnershipController(object):
 
 
         LOG.debug("TESTING AUTH_URL: %s" % auth_url)
-        #LOG.debug("TESTING GETATTR_URL: %s" % getattr(req.user, "service_catalog", None))
-        #LOG.debug("TESTING CONF AUTH_URL: %s" % CONF.neutron_admin_auth_url)
-        #LOG.debug("TESTING OS AUTH_URL: %s" % os.environ['OS_AUTH_URL'])
-
-
 
         #sc = access.AccessInfo.factory(None, compat_catalog).service_catalog
 
-        #kclient = keystoneclient(request, admin=True)
-
-        keystone_client = client.Client(token=context.auth_token, auth_url="http://10.1.0.32:5000/v3")
+        keystone_client = client.Client(token=context.auth_token, auth_url=auth_url)
 
         LOG.debug("::DEBUG::KEYSTONE::USERS::%s" % keystone_client.users)
         LOG.debug("::DEBUG::KEYSTONE::USERS::DICT::%s" % keystone_client.users.__dict__)
@@ -121,12 +90,7 @@ class ChangeInstanceOwnershipController(object):
 
         #keystone_client = client.Client(token=context.auth_token, auth_url="http://10.1.0.32:5000/v3")
 
-        print("::PRINT::CHANGE_INSTANCE_OWNERSHIP::ACTION::BODY::")
-
-
-
         LOG.debug("::DEBUG::CHANGE_INSTANCE_OWNERSHIP::ACTION::BODY::" % body)
-        LOG.debug("TESTING AUTH_URL: %s" % auth_url)
 
         user_id = None
         """if ('user_id' in body):
