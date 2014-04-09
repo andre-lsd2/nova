@@ -78,7 +78,14 @@ class ChangeInstanceOwnershipController(object):
         x = req.headers.get('X-Service-Catalog', req.headers.get('X_STORAGE_TOKEN'))
 
         LOG.debug("TESTING AUTH_URL: %s" % x)
-        LOG.debug("TESTING AUTH_URL: %s" % ast.literal_eval(x))
+        x = ast.literal_eval(x)
+        LOG.debug("TESTING AUTH_URL: %s" % type(x))
+        LOG.debug("TESTING AUTH_URL: %s" % len(x))
+        LOG.debug("TESTING AUTH_URL: %s" % x[0].get("endpoints"))
+
+        for i in x:
+            if i.get("type") == "identity":
+                LOG.debug("TESTING ENDPOINT URL: %s" % i.get("endpoints")[0].get("url"))
         #LOG.debug("TESTING REQ: %s" % req)
         #LOG.debug("TESTING GETATTR_URL: %s" % getattr(req.user, "service_catalog", None))
         #LOG.debug("TESTING CONF AUTH_URL: %s" % CONF.neutron_admin_auth_url)
