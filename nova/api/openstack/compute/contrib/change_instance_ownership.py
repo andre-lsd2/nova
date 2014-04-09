@@ -76,7 +76,7 @@ class ChangeInstanceOwnershipController(object):
         LOG.debug("TESTING request HEADERS: %s" % req.headers)
 
         x = req.headers.get('X_AUTH_TOKEN',
-                                     req.headers.get('X_STORAGE_TOKEN'))
+                                     req.headers.get('X-Service-Catalog'))
 
         LOG.debug("TESTING AUTH_URL: %s" % x)
         LOG.debug("TESTING REQ: %s" % req)
