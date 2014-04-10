@@ -58,7 +58,7 @@ class ChangeInstanceOwnershipController(object):
         catalog = req.headers.get('X-Service-Catalog', req.headers.get('X_STORAGE_TOKEN'))
 
         LOG.debug("TESTING AUTH_URL: %s" % catalog)
-        #catalog = ast.literal_eval(catalog)
+        catalog = ast.literal_eval(catalog)
 
         #for i in catalog:
         #    if i.get("type") == "identity":
