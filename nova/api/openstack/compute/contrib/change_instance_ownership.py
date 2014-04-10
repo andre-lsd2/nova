@@ -84,7 +84,8 @@ class ChangeInstanceOwnershipController(object):
 
         LOG.debug("::DEBUG::KEYSTONE::USERS::%s" % keystone_client.users)
         LOG.debug("::DEBUG::CHANGE_INSTANCE_OWNERSHIP::REQUESTTYPE::%s::" % req.environ.keys())
-        LOG.debug("::DEBUG::CHANGE_INSTANCE_OWNERSHIP::REQUESTTYPE::%s::" % req.environ["X-SERVICE-CATALOG"])
+        LOG.debug("::DEBUG::CHANGE_INSTANCE_OWNERSHIP::REQUESTTYPE::%s::" % req.environ["HTTP_X_SERVICE_CATALOG"])
+        #LOG.debug("::DEBUG::CHANGE_INSTANCE_OWNERSHIP::REQUESTTYPE::%s::" % req.environ["HTTP_X_SERVICE_CATALOG"])
         keystone_client.users.list()
 
         LOG.debug("::DEBUG::CHANGE_INSTANCE_OWNERSHIP::ACTION::BODY::" % body)
