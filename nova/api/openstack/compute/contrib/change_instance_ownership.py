@@ -20,7 +20,7 @@ from nova import exception
 from nova import quota
 from nova.openstack.common.gettextutils import _
 from nova.openstack.common import log as logging
-from keystoneclient.v3 import client
+from keystoneclient import client
 
 import ast
 
@@ -119,7 +119,7 @@ class ChangeInstanceOwnershipController(object):
             #raise webob.exc.HTTPBadRequest(explanation="User_id or Project_id were not found in the request body")
 
         print("::PRINT::CHANGE_INSTANCE_OWNERSHIP::ACTION::OWNER_ID::%s::INSTANCE::%s::" % (owner_id, instance))
-        self._commit(instance, context, body, id, user_id, project_id)
+        #self._commit(instance, context, body, id, user_id, project_id)
 
 
     def _replace_url_version(self, url, old="2.0", new="3"):
