@@ -98,15 +98,12 @@ class ChangeInstanceOwnershipController(object):
 
         LOG.debug("::DEBUG::CHANGE_INSTANCE_OWNERSHIP::ACTION::BODY::" % body)
 
-        user_id = None
+        user_id = owner_id
         if ('user_id' in body):
-            LOG.debug("::DEBUG::CHANGE_INSTANCE_OWNERSHIP::ACTION::USER_ID::")
-            print("::PRINT::CHANGE_INSTANCE_OWNERSHIP::ACTION::USER_ID::")
-            user_id = body['user_id'] if 'user_id' in body else owner_id
+            user_id = body['user_id']
+
         project_id = instance.project_id
         if ('project_id' in body):
-            LOG.debug("::DEBUG::CHANGE_INSTANCE_OWNERSHIP::ACTION::PROJECT_ID::")
-            print("::PRINT::CHANGE_INSTANCE_OWNERSHIP::ACTION::PROJECT_ID::")
             project_id = body['project_id']
 
         #user_id = body['user_id'] if 'user_id' in body else owner_id
@@ -123,6 +120,7 @@ class ChangeInstanceOwnershipController(object):
             #raise webob.exc.HTTPBadRequest(explanation="User_id or Project_id were not found in the request body")
 
         print("::PRINT::CHANGE_INSTANCE_OWNERSHIP::ACTION::OWNER_ID::%s::INSTANCE::%s::" % (owner_id, instance))
+        self._commit(instance, context, body, id, user_id, project_id)
 
 
     def _replace_url_version(self, url, old="2.0", new="3"):
