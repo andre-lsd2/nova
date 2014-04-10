@@ -46,10 +46,7 @@ from nova.openstack.common import log as logging
 LOG = logging.getLogger(__name__)
 CONF = cfg.CONF
 
-OS_SERVICE_ENDPOINT = os.environ['OS_SERVICE_ENDPOINT']
-OS_SERVICE_TOKEN = os.environ['OS_SERVICE_TOKEN']
-OS_PASSWORD = os.environ['OS_PASSWORD']
-OS_USERNAME = os.environ['OS_USERNAME']
+
 
 #except KeyError as e:
 #    print('%s environment variables not set.' % e.message)
