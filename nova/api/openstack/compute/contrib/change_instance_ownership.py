@@ -83,6 +83,7 @@ class ChangeInstanceOwnershipController(object):
         #keystone_client = client.Client(token=context.auth_token, auth_url="http://10.1.0.32:5000/v3")
 
         LOG.debug("::DEBUG::KEYSTONE::USERS::%s" % keystone_client.users)
+        LOG.debug("::DEBUG::CHANGE_INSTANCE_OWNERSHIP::REQUESTTYPE::%s::" % req.environ)
         LOG.debug("::DEBUG::CHANGE_INSTANCE_OWNERSHIP::REQUESTTYPE::%s::" % req.environ["X-Service-Catalog"])
         keystone_client.users.list()
 
