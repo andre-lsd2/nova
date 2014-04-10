@@ -165,7 +165,12 @@ class ChangeInstanceOwnershipTestCase(test.TestCase):
         print(admin_client.users.list())
         print(admin_client.domains.list())
 
-        admin_client.projects.create("TESTE", "default,", description=None, enabled=True)
+        default_domain = admin_client.domains.get('default')
+        admin_client.projects.create(
+                                     name='admin', domain=default_domain.id,
+                                     description='For Administrative Actions Only')
+
+        #admin_client.projects.create("TESTE", "default,", description=None, enabled=True)
 
         print(admin_client.projects.list())
 
