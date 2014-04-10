@@ -146,13 +146,21 @@ class ChangeInstanceOwnershipTestCase(test.TestCase):
         instance = self._create_instance("u01", "p01")
         print(instance.__dict__)
 
-        OS_SERVICE_ENDPOINT = os.environ['OS_SERVICE_ENDPOINT']
+        #OS_SERVICE_ENDPOINT = os.environ['OS_SERVICE_ENDPOINT']
         #OS_SERVICE_TOKEN = os.environ['OS_SERVICE_TOKEN']
         #OS_PASSWORD = os.environ['OS_PASSWORD']
         #OS_USERNAME = os.environ['OS_USERNAME']
 
-        print("DB: %s" % OS_SERVICE_ENDPOINT)
+        #print("DB: %s" % OS_SERVICE_ENDPOINT)
 
+        admin_client = client.Client(auth_url='http://localhost:5000/v3',
+                                     management_url='http://localhost:35357/v3',
+                                     username='admin',
+                                     password='admin',
+                                     project_name='admin',
+                                     debug=True)
+
+        print("client created for %s" % admin_client.username)
 
         req = fakes.HTTPRequest.blank('/v2/fake/os-change-instance-ownership/%s' % instance.uuid)
         res_dict = self.controller.action(req, instance.uuid, body)
