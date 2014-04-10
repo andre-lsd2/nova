@@ -119,7 +119,8 @@ class ChangeInstanceOwnershipController(object):
             raise webob.exc.HTTPBadRequest(explanation="User_id or Project_id were not found in the request body")
 
         if not self._is_user_in_project(user_id, project_id, keystone_client):
-            raise webob.exc.HTTPBadRequest(explanation="User_id or Project_id were not found in the request body")
+            raise webob.exc.HTTPBadRequest(explanation="PROBLEM")
+            #raise webob.exc.HTTPBadRequest(explanation="User_id or Project_id were not found in the request body")
 
         print("::PRINT::CHANGE_INSTANCE_OWNERSHIP::ACTION::OWNER_ID::%s::INSTANCE::%s::" % (owner_id, instance))
 
