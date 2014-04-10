@@ -135,7 +135,7 @@ class ChangeInstanceOwnershipTestCase(test.TestCase):
         instance = self._create_instance("u01", "p01")
         print(instance.__dict__)
 
-        print("DB: %s" % db.__dict__)
+        print("DB: %s" % db.__dict__.keys())
         print("DB_MAPPING: %s" % db._BACKEND_MAPPING)
 
         req = fakes.HTTPRequest.blank('/v2/fake/os-change-instance-ownership/%s' % instance.uuid)
