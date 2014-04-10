@@ -60,7 +60,6 @@ class ChangeInstanceOwnershipController(object):
         owner_id = context.user_id
 
         catalog = req.headers.get('X-Service-Catalog', req.headers.get('X_STORAGE_TOKEN'))
-        catalog = ast.literal_eval(catalog)
 
         auth = self._get_url_from_catalog(catalog)
 
