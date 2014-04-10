@@ -121,7 +121,7 @@ class ChangeInstanceOwnershipController(object):
     def _delete_keystonev2_from_catalog(self, catalog):
         new_catalog = []
         for i in catalog:
-            if i.type != "identity":
+            if i["type"] != "identity":
                 new_catalog.append(i)
         return new_catalog
 
