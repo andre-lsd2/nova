@@ -163,6 +163,7 @@ class ChangeInstanceOwnershipTestCase(test.TestCase):
 
         print("client created for %s" % admin_client.username)
         print(admin_client.users.list())
+        print(admin_client.domains.list())
 
         admin_client.projects.create("TESTE", "default,", description=None, enabled=True)
 
