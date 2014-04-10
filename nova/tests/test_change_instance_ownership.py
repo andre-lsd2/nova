@@ -65,7 +65,7 @@ class ChangeInstanceOwnershipTestCase(test.TestCase):
     def setUpClass(cls):
         super(ChangeInstanceOwnershipTestCase, cls).setUpClass()
 
-        #cls.controller = ChangeInstanceOwnershipController()
+        cls.controller = ChangeInstanceOwnershipController()
 
         #cls.keystone = client.Client(username="admin", password="admin", auth_url="http://127.0.0.1:5000/v3/")
         #cls.token = cls.keystone.get_raw_token_from_identity_service(self, auth_url="http://127.0.0.1:5000/v3/", username="admin", password="admin", tenant_name, tenant_id, token, user_id, user_domain_id, user_domain_name, domain_id, domain_name, project_id, project_name, project_domain_id, project_domain_name, trust_id)
@@ -128,6 +128,16 @@ class ChangeInstanceOwnershipTestCase(test.TestCase):
                 return i
 
     def test_case_one(self):
+        print("Test One")
+
+        body = {"user_id": "us02"}
+
+        req = fakes.HTTPRequest.blank('/v2/fake/os-change-instance-ownership/1')
+        res_dict = self.controller.action(req, 1, body)
+
+        self.assertEquals(1, 2)
+
+    def test_case_old(self):
         print("Test")
         config_path = os.environ.get('GLANCE_TEST_SWIFT_CONF')
         print("::PRINT::CONFIG::PATH::%s::" % config_path)
