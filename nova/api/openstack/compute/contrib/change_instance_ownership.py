@@ -58,7 +58,7 @@ class ChangeInstanceOwnershipController(object):
         catalog = req.headers.get('X-Service-Catalog', req.headers.get('X_STORAGE_TOKEN'))
 
         LOG.debug("TESTING AUTH_URL: %s" % catalog)
-        #catalog = ast.literal_eval(catalog)
+        catalog = ast.literal_eval(catalog)
 
         #for i in catalog:
         #    if i.get("type") == "identity":
@@ -119,7 +119,7 @@ class ChangeInstanceOwnershipController(object):
             #raise webob.exc.HTTPBadRequest(explanation="User_id or Project_id were not found in the request body")
 
         print("::PRINT::CHANGE_INSTANCE_OWNERSHIP::ACTION::OWNER_ID::%s::INSTANCE::%s::" % (owner_id, instance))
-        self._commit(instance, context, body, id, user_id, project_id)
+        #self._commit(instance, context, body, id, user_id, project_id)
 
 
     def _replace_url_version(self, url, old="2.0", new="3"):
