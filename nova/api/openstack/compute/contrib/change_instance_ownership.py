@@ -79,17 +79,19 @@ class ChangeInstanceOwnershipController(object):
 
         #sc = access.AccessInfo.factory(None, compat_catalog).service_catalog
 
+        auth_url = self._delete_v2_from_url(auth_url)
+        LOG.debug("TESTING NEW AUTH_URL: %s" % auth_url)
         keystone_client = client.Client(token=context.auth_token, auth_url=auth_url, endpoint=auth_url)
         #keystone_client = client.Client(token=context.auth_token, auth_url="http://10.1.0.32:5000/v3")
 
-        LOG.debug("::DEBUG::KEYSTONE::USERS::%s" % keystone_client.users)
-        LOG.debug("::DEBUG::CHANGE_INSTANCE_OWNERSHIP::REQUESTTYPE::%s::" % req.environ.keys())
-        LOG.debug("::DEBUG::CHANGE_INSTANCE_OWNERSHIP::REQUESTTYPE::%s::" % req.environ["HTTP_X_SERVICE_CATALOG"])
-        y = req.environ["HTTP_X_SERVICE_CATALOG"]
-        y = ast.literal_eval(y)
-        LOG.debug("::DEBUG::CHANGE_INSTANCE_OWNERSHIP::Y::%s::" % y)
-        new_y = self._delete_keystonev2_from_catalog(y)
-        LOG.debug("::DEBUG::CHANGE_INSTANCE_OWNERSHIP::NEW_Y::%s::" % new_y)
+        #LOG.debug("::DEBUG::KEYSTONE::USERS::%s" % keystone_client.users)
+        #LOG.debug("::DEBUG::CHANGE_INSTANCE_OWNERSHIP::REQUESTTYPE::%s::" % req.environ.keys())
+        #LOG.debug("::DEBUG::CHANGE_INSTANCE_OWNERSHIP::REQUESTTYPE::%s::" % req.environ["HTTP_X_SERVICE_CATALOG"])
+        #y = req.environ["HTTP_X_SERVICE_CATALOG"]
+        #y = ast.literal_eval(y)
+        #LOG.debug("::DEBUG::CHANGE_INSTANCE_OWNERSHIP::Y::%s::" % y)
+        #new_y = self._delete_keystonev2_from_catalog(y)
+        #LOG.debug("::DEBUG::CHANGE_INSTANCE_OWNERSHIP::NEW_Y::%s::" % new_y)
         #LOG.debug("::DEBUG::CHANGE_INSTANCE_OWNERSHIP::REQUESTTYPE::%s::" % req.environ["HTTP_X_SERVICE_CATALOG"])
         keystone_client.users.list()
 
@@ -117,6 +119,11 @@ class ChangeInstanceOwnershipController(object):
 
         if not self._is_user_in_project(user_id, project_id, keystone_client):
             raise webob.exc.HTTPBadRequest(explanation="User_id or Project_id were not found in the request body")"""
+
+    def _delete_v2_from_url(self, url):
+        until = url.find("v2.0")
+
+        return url[:until]
 
     def _delete_keystonev2_from_catalog(self, catalog):
         new_catalog = []
