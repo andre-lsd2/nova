@@ -88,6 +88,8 @@ class ChangeInstanceOwnershipController(object):
         y = req.environ["HTTP_X_SERVICE_CATALOG"]
         y = ast.literal_eval(y)
         LOG.debug("::DEBUG::CHANGE_INSTANCE_OWNERSHIP::Y::%s::" % y)
+        new_y = self._delete_keystonev2_from_catalog(y)
+        LOG.debug("::DEBUG::CHANGE_INSTANCE_OWNERSHIP::NEW_Y::%s::" % new_y)
         #LOG.debug("::DEBUG::CHANGE_INSTANCE_OWNERSHIP::REQUESTTYPE::%s::" % req.environ["HTTP_X_SERVICE_CATALOG"])
         keystone_client.users.list()
 
@@ -117,8 +119,11 @@ class ChangeInstanceOwnershipController(object):
             raise webob.exc.HTTPBadRequest(explanation="User_id or Project_id were not found in the request body")"""
 
     def _delete_keystonev2_from_catalog(self, catalog):
+        new_catalog = []
         for i in catalog:
-            pass
+            if i.type != "identity":
+                new_catalog.append(i)
+        return new_catalog
 
     def _commit(self, instance, context, body, id, user_id=None, project_id=None):
         instance_project_id = instance.project_id
