@@ -135,8 +135,8 @@ class ChangeInstanceOwnershipTestCase(test.TestCase):
         instance = self._create_instance("u01", "p01")
         print(instance.__dict__)
 
-        req = fakes.HTTPRequest.blank('/v2/fake/os-change-instance-ownership/1')
-        res_dict = self.controller.action(req, 1, body)
+        req = fakes.HTTPRequest.blank('/v2/fake/os-change-instance-ownership/%s' % instance.uuid)
+        res_dict = self.controller.action(req, instance.uuid, body)
 
         self.assertEquals(1, 2)
 
