@@ -80,6 +80,8 @@ class ChangeInstanceOwnershipTestCase(test.TestCase):
         cls.context2 = context.get_admin_context()
         cls.context1 = FakeContext(cls.project01.id, cls.user01.id)
         config_path = os.environ.get('GLANCE_TEST_SWIFT_CONF')
+        print("::PRINT::CONFIG::PATH::%s::" % config_path)
+        assert(1 == 2)
 
     @classmethod
     def tearDownClass(cls):
