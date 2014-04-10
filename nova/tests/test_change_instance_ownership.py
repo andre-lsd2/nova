@@ -130,7 +130,9 @@ class ChangeInstanceOwnershipTestCase(test.TestCase):
     def test_case_one(self):
         print("Test One")
 
-        body = {"user_id": "us02"}
+        body = {"user_id": "u02"}
+        instance = self._create_instance("u01", "p01")
+        print(instance)
 
         req = fakes.HTTPRequest.blank('/v2/fake/os-change-instance-ownership/1')
         res_dict = self.controller.action(req, 1, body)
