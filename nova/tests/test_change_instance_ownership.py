@@ -65,20 +65,20 @@ class ChangeInstanceOwnershipTestCase(test.TestCase):
     def setUpClass(cls):
         super(ChangeInstanceOwnershipTestCase, cls).setUpClass()
 
-        cls.controller = ChangeInstanceOwnershipController()
+        #cls.controller = ChangeInstanceOwnershipController()
 
-        cls.keystone = client.Client(username="admin", password="admin", auth_url="http://127.0.0.1:5000/v3/")
+        #cls.keystone = client.Client(username="admin", password="admin", auth_url="http://127.0.0.1:5000/v3/")
         #cls.token = cls.keystone.get_raw_token_from_identity_service(self, auth_url="http://127.0.0.1:5000/v3/", username="admin", password="admin", tenant_name, tenant_id, token, user_id, user_domain_id, user_domain_name, domain_id, domain_name, project_id, project_name, project_domain_id, project_domain_name, trust_id)
         #cls.token = cls.keystone.get_raw_token_from_identity_service(auth_url="http://127.0.0.1:5000/v3/", username="admin", password="admin")
 
-        cls.project01 = cls.keystone.projects.create("project01", None)
-        cls.user01    = cls.keystone.users.create("user01", project="admin")
-        cls.user02    = cls.keystone.users.create("user02", project=cls.project01)
+        #cls.project01 = cls.keystone.projects.create("project01", None)
+        #cls.user01    = cls.keystone.users.create("user01", project="admin")
+        #cls.user02    = cls.keystone.users.create("user02", project=cls.project01)
 
         #self.context = context.RequestContext('fake', 'fake', roles=['member'])
         #cls.context3 = context.RequestContext(cls.user01.id, cls.project01.id)
-        cls.context2 = context.get_admin_context()
-        cls.context1 = FakeContext(cls.project01.id, cls.user01.id)
+        #cls.context2 = context.get_admin_context()
+        #cls.context1 = FakeContext(cls.project01.id, cls.user01.id)
 
     @classmethod
     def tearDownClass(cls):
@@ -129,6 +129,10 @@ class ChangeInstanceOwnershipTestCase(test.TestCase):
 
     def test_case_one(self):
         print("Test")
+        config_path = os.environ.get('GLANCE_TEST_SWIFT_CONF')
+        print("::PRINT::CONFIG::PATH::%s::" % config_path)
+
+        self.assertEquals(1, 2)
         #self.context = context.get_admin_context()
         self.context = context.RequestContext('admin', 'admin', is_admin=True, auth_token="fake")
         #self.token = self.keystone.get_raw_token_from_identity_service(      auth_url="http://127.0.0.1:5000/v3/", username="admin", password="admin", tenant_name="admin", domain_name="Default")
