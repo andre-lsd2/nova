@@ -46,13 +46,14 @@ from nova.openstack.common import log as logging
 LOG = logging.getLogger(__name__)
 CONF = cfg.CONF
 
-try:
-    OS_SERVICE_ENDPOINT = os.environ['OS_SERVICE_ENDPOINT']
-    OS_SERVICE_TOKEN = os.environ['OS_SERVICE_TOKEN']
-    OS_PASSWORD = os.environ['OS_PASSWORD']
-    OS_USERNAME = os.environ['OS_USERNAME']
+OS_SERVICE_ENDPOINT = os.environ['OS_SERVICE_ENDPOINT']
+OS_SERVICE_TOKEN = os.environ['OS_SERVICE_TOKEN']
+OS_PASSWORD = os.environ['OS_PASSWORD']
+OS_USERNAME = os.environ['OS_USERNAME']
 
-
+#except KeyError as e:
+#    print('%s environment variables not set.' % e.message)
+#    exit(1)
 
 class FakeContext(object):
     def __init__(self, project_id, user_id):
