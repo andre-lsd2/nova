@@ -26,7 +26,8 @@ import ast
 
 LOG = logging.getLogger(__name__)
 
-authorize = extensions.extension_authorizer('compute', 'change_instance_ownership')
+authorize = extensions.extension_authorizer('compute',
+                                            'change_instance_ownership')
 QUOTAS = quota.QUOTAS
 
 class ChangeInstanceOwnershipController(object):
@@ -42,7 +43,8 @@ class ChangeInstanceOwnershipController(object):
             if i.get("interface") == interface_type:
                 return i.get("url")
 
-    def _get_url_from_catalog(self, catalog, endpoint_type="identity", interface_type="public"):
+    def _get_url_from_catalog(self, catalog, endpoint_type="identity",
+                              interface_type="public"):
         endpoint = self._get_endpoint_from_catalog(catalog, endpoint_type)
         return self._get_url_from_endpoint(endpoint, interface_type)
 
@@ -52,6 +54,11 @@ class ChangeInstanceOwnershipController(object):
             value = body[field]
         return value
 
+    def _replace_url_version(self, url, old="2.0", new="3"):
+        until = url.find(old)
+
+        return url[:until] + new
+
     def action(self, req, id, body):
         context = req.environ['nova.context']
         authorize(context)
@@ -59,43 +66,35 @@ class ChangeInstanceOwnershipController(object):
         instance = db.instance_get_by_uuid(context, id)
         owner_id = context.user_id
 
-        catalog = req.headers.get('X-Service-Catalog', req.headers.get('X_STORAGE_TOKEN'))
+        catalog = req.headers.get('X-Service-Catalog',
+                                  req.headers.get('X_STORAGE_TOKEN'))
 
         auth_url = self._get_url_from_catalog(catalog)
-        LOG.debug("::DEBUG::AUTH_URL::%s::" % auth_url)
         auth_url = self._replace_url_version(auth_url)
-        LOG.debug("::DEBUG::NEW_AUTH_URL::%s::" % auth_url)
 
-        keystone_client = client.Client(token=context.auth_token, endpoint=auth_url)
+        keystone_client = client.Client(token=context.auth_token,
+                                        endpoint=auth_url)
 
         user_id = self._get_field_from_body("user_id", body, owner_id)
-        project_id = self._get_field_from_body("project_id", body, instance.project_id)
+        project_id = self._get_field_from_body("project_id", body,
+                                               instance.project_id)
 
         if ("user_id" not in body and "project_id" not in body):
-            raise webob.exc.HTTPBadRequest(explanation="User_id or Project_id were not found in the request body")
+            e = "User_id or Project_id were not found in the request body"
+            raise webob.exc.HTTPBadRequest(explanation=e)
 
         if (user_id == owner_id and project_id == instance.project_id):
-            raise webob.exc.HTTPBadRequest(explanation="The User_id and Project_id provided is the same as the current one")
+            e = "The User_id and Project_id provided is the same as the current one"
+            raise webob.exc.HTTPBadRequest(explanation=e)
 
         if not self._is_user_in_project(user_id, project_id, keystone_client):
-            raise webob.exc.HTTPBadRequest(explanation="The user_id or project_id provided are not valid for changing instance ownership")
+            e = "The user_id or project_id provided are not valid for changing instance ownership"
+            raise webob.exc.HTTPBadRequest(explanation=e)
 
-        #self._commit(instance, context, body, id, user_id, project_id)
+        self._commit(instance, context, body, id, user_id, project_id)
 
-
-    def _replace_url_version(self, url, old="2.0", new="3"):
-        until = url.find(old)
-
-        return url[:until] + new
-
-    def _delete_keystonev2_from_catalog(self, catalog):
-        new_catalog = []
-        for i in catalog:
-            if i["type"] != "identity":
-                new_catalog.append(i)
-        return new_catalog
-
-    def _commit(self, instance, context, body, id, user_id=None, project_id=None):
+    def _commit(self, instance, context, body, id, user_id=None,
+                project_id=None):
         instance_project_id = instance.project_id
         num_instances = 1
         req_cores = instance.vcpus
@@ -147,32 +146,32 @@ class ChangeInstanceOwnershipController(object):
 
     def _create_reservation(self, context, instances, cores, ram, fixed_ips,
                             project_id=None, user_id=None):
-         try:
-             reservations = QUOTAS.reserve(context,
-                                           instances=instances,
-                                           cores=cores,
-                                           ram=ram,
-                                           fixed_ips=fixed_ips,
-                                           project_id=project_id,
-                                           user_id=user_id)
+        try:
+            reservations = QUOTAS.reserve(context,
+                                          instances=instances,
+                                          cores=cores,
+                                          ram=ram,
+                                          fixed_ips=fixed_ips,
+                                          project_id=project_id,
+                                          user_id=user_id)
 
-             return reservations
-         except exception.OverQuota as exc:
-             quotas = exc.kwargs['quotas']
-             overs = exc.kwargs['overs']
-             headroom = exc.kwargs['headroom']
-             allowed = headroom['instances']
-             resource = overs[0]
-             used = quotas[resource] - headroom[resource]
-             total_allowed = used + headroom[resource]
-             requested = dict(num_instances=instances,
-                              cores=cores,
-                              ram=ram)
-             raise exception.TooManyInstances(overs=overs,
-                                              req=requested[resource],
-                                              used=used,
-                                              allowed=total_allowed,
-                                              resource=resource)
+            return reservations
+        except exception.OverQuota as exc:
+            quotas = exc.kwargs['quotas']
+            overs = exc.kwargs['overs']
+            headroom = exc.kwargs['headroom']
+            allowed = headroom['instances']
+            resource = overs[0]
+            used = quotas[resource] - headroom[resource]
+            total_allowed = used + headroom[resource]
+            requested = dict(num_instances=instances,
+                             cores=cores,
+                             ram=ram)
+            raise exception.TooManyInstances(overs=overs,
+                                             req=requested[resource],
+                                             used=used,
+                                             allowed=total_allowed,
+                                             resource=resource)
 
 
 class Change_instance_ownership(extensions.ExtensionDescriptor):
