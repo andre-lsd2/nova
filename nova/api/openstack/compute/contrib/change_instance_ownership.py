@@ -21,13 +21,8 @@ from nova import quota
 from nova.openstack.common.gettextutils import _
 from nova.openstack.common import log as logging
 from keystoneclient.v3 import client
-from keystoneclient import access
 
-from oslo.config import cfg
-import os
 import ast
-
-CONF = cfg.CONF
 
 LOG = logging.getLogger(__name__)
 
@@ -36,6 +31,17 @@ QUOTAS = quota.QUOTAS
 
 class ChangeInstanceOwnershipController(object):
 
+    def _get_endpoint_from_catalog(self, catalog, endpoint_type="identity"):
+        catalog_eval = ast.literal_eval(catalog)
+        for i in catalog_eval:
+            if i.get("type") == endpoint_type:
+                return i
+
+    def _get_url_from_endpoint(self, endpoint, interface_type="public"):
+        for i in endpoint.get("endpoints"):
+            if i.get("interface") == interface_type:
+                return i.get("url")
+
     def action(self, req, id, body):
 
         LOG.debug("::PRINT::CHANGE_INSTANCE_OWNERSHIP::ACTION::REQ::%s::ID::%s::BODY::%s::" % (req, id, body))
@@ -43,31 +49,24 @@ class ChangeInstanceOwnershipController(object):
         context = req.environ['nova.context']
         authorize(context)
 
-        LOG.debug("CONTEXT: %s" % context.to_dict())
-        LOG.debug("ALL INSTANCES: %s" % db.instance_get_all(context))
-        instance = db.instance_get_by_uuid(context, id)
+        #LOG.debug("CONTEXT: %s" % context.to_dict())
+        #LOG.debug("ALL INSTANCES: %s" % db.instance_get_all(context))
 
+        instance = db.instance_get_by_uuid(context, id)
         owner_id = context.user_id
 
-        #compat_catalog = { 'access': {'token': {'id': ''}}}
-        #compat_catalog = None
-        #compat_catalog = {'token': {'catalog': context.service_catalog,'methods': ''}}
-        #compat_catalog = {'access': {'serviceCatalog': context.service_catalog,'token': {'id': ''}}}
+        catalog = req.headers.get('X-Service-Catalog', req.headers.get('X_STORAGE_TOKEN'))
 
-        #LOG.debug("CONTEXT: %s" % context.to_dict())
+        LOG.debug("TESTING AUTH_URL: %s" % catalog)
+        #catalog = ast.literal_eval(catalog)
 
-        x = req.headers.get('X-Service-Catalog', req.headers.get('X_STORAGE_TOKEN'))
-
-        LOG.debug("TESTING AUTH_URL: %s" % x)
-        x = ast.literal_eval(x)
-
-        for i in x:
-            if i.get("type") == "identity":
-                LOG.debug("TESTING IDENTITY: %s" % i)
+        #for i in catalog:
+        #    if i.get("type") == "identity":
+        #        LOG.debug("TESTING IDENTITY: %s" % i)
 
         auth_url = None
 
-        for i in x:
+        for i in catalog:
             if i.get("type") == "identity":
                 for j in i.get("endpoints"):
                     if j.get("interface") == "public":
