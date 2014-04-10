@@ -46,6 +46,12 @@ class ChangeInstanceOwnershipController(object):
         endpoint = self._get_endpoint_from_catalog(catalog, endpoint_type)
         return self._get_url_from_endpoint(endpoint, interface_type)
 
+    def _get_field_from_body(self, field, body, default=None):
+        user_id = default
+        if (field in body):
+            user_id = body[field]
+        pass
+
     def action(self, req, id, body):
         context = req.environ['nova.context']
         authorize(context)
@@ -54,12 +60,11 @@ class ChangeInstanceOwnershipController(object):
         owner_id = context.user_id
 
         catalog = req.headers.get('X-Service-Catalog', req.headers.get('X_STORAGE_TOKEN'))
+        catalog = ast.literal_eval(catalog)
+
         auth = self._get_url_from_catalog(catalog)
 
         LOG.debug("::DEBUG::AUTH_URL::%s::" % auth)
-
-        catalog = ast.literal_eval(catalog)
-
         auth_url = None
         for i in catalog:
             if i.get("type") == "identity":
@@ -71,22 +76,20 @@ class ChangeInstanceOwnershipController(object):
         auth_url = self._replace_url_version(auth_url)
         keystone_client = client.Client(token=context.auth_token, endpoint=auth_url)
 
-        user_id = owner_id
-        if ('user_id' in body):
-            user_id = body['user_id']
+        user_id = self._get_field_from_body("user_id", body, owner_id)
+        project_id = self._get_field_from_body("project_id", body, instance.project_id)
 
-        project_id = instance.project_id
-        if ('project_id' in body):
-            project_id = body['project_id']
-
-        if (user_id == owner_id and project_id == instance.project_id):
+        if ("user_id" not in body and "project_id" not in body):
             raise webob.exc.HTTPBadRequest(explanation="User_id or Project_id were not found in the request body")
 
+        if (user_id == owner_id and project_id == instance.project_id):
+            raise webob.exc.HTTPBadRequest(explanation="The User_id and Project_id provided is the same ")
+
         if not self._is_user_in_project(user_id, project_id, keystone_client):
-            raise webob.exc.HTTPBadRequest(explanation="PROBLEM")
+            raise webob.exc.HTTPBadRequest(explanation="The ")
             #raise webob.exc.HTTPBadRequest(explanation="User_id or Project_id were not found in the request body")
 
-        self._commit(instance, context, body, id, user_id, project_id)
+        #self._commit(instance, context, body, id, user_id, project_id)
 
 
     def _replace_url_version(self, url, old="2.0", new="3"):
