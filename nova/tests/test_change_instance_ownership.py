@@ -52,9 +52,7 @@ try:
     OS_PASSWORD = os.environ['OS_PASSWORD']
     OS_USERNAME = os.environ['OS_USERNAME']
 
-except KeyError as e:
-    print('%s environment variables not set.' % e.message)
-    exit(1)
+
 
 class FakeContext(object):
     def __init__(self, project_id, user_id):
