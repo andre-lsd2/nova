@@ -20,7 +20,7 @@ from nova import exception
 from nova import quota
 from nova.openstack.common.gettextutils import _
 from nova.openstack.common import log as logging
-from keystoneclient import client
+from keystoneclient.v3 import client
 
 import ast
 
@@ -58,7 +58,7 @@ class ChangeInstanceOwnershipController(object):
         catalog = req.headers.get('X-Service-Catalog', req.headers.get('X_STORAGE_TOKEN'))
 
         LOG.debug("TESTING AUTH_URL: %s" % catalog)
-        catalog = ast.literal_eval(catalog)
+        #catalog = ast.literal_eval(catalog)
 
         #for i in catalog:
         #    if i.get("type") == "identity":
@@ -81,7 +81,6 @@ class ChangeInstanceOwnershipController(object):
         auth_url = self._replace_url_version(auth_url)
         LOG.debug("TESTING NEW AUTH_URL: %s" % auth_url)
         keystone_client = client.Client(token=context.auth_token, auth_url=auth_url, endpoint=auth_url)
-        LOG.debug("KEYSTONECLIENT VERSION::%s::" % keystone_client)
         #keystone_client = client.Client(token=context.auth_token, auth_url="http://10.1.0.32:5000/v3")
 
         #LOG.debug("::DEBUG::KEYSTONE::USERS::%s" % keystone_client.users)
@@ -120,7 +119,7 @@ class ChangeInstanceOwnershipController(object):
             #raise webob.exc.HTTPBadRequest(explanation="User_id or Project_id were not found in the request body")
 
         print("::PRINT::CHANGE_INSTANCE_OWNERSHIP::ACTION::OWNER_ID::%s::INSTANCE::%s::" % (owner_id, instance))
-        #self._commit(instance, context, body, id, user_id, project_id)
+        self._commit(instance, context, body, id, user_id, project_id)
 
 
     def _replace_url_version(self, url, old="2.0", new="3"):
