@@ -79,9 +79,6 @@ class ChangeInstanceOwnershipTestCase(test.TestCase):
         #cls.context3 = context.RequestContext(cls.user01.id, cls.project01.id)
         cls.context2 = context.get_admin_context()
         cls.context1 = FakeContext(cls.project01.id, cls.user01.id)
-        config_path = os.environ.get('GLANCE_TEST_SWIFT_CONF')
-        print("::PRINT::CONFIG::PATH::%s::" % config_path)
-        assert(1 == 2)
 
     @classmethod
     def tearDownClass(cls):
@@ -172,7 +169,10 @@ class ChangeInstanceOwnershipTestCase(test.TestCase):
         #print("Controller")
         #print(self.controller)
 
-        self.controller.action(req, instance_uuid, body)
+        #self.controller.action(req, instance_uuid, body)
+
+        config_path = os.environ.get('GLANCE_TEST_SWIFT_CONF')
+        print("::PRINT::CONFIG::PATH::%s::" % config_path)
 
         self.assertEquals(1, 2)
 
