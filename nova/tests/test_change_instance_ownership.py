@@ -95,9 +95,9 @@ class ChangeInstanceOwnershipTestCase(test.TestCase):
     def tearDownClass(cls):
         super(ChangeInstanceOwnershipTestCase, cls).tearDownClass()
 
-        cls.keystone.projects.delete(cls.project01)
-        cls.keystone.users.delete(cls.user01)
-        cls.keystone.users.delete(cls.user02)
+        #cls.keystone.projects.delete(cls.project01)
+        #cls.keystone.users.delete(cls.user01)
+        #cls.keystone.users.delete(cls.user02)
 
     def setUp(self):
         super(ChangeInstanceOwnershipTestCase, self).setUp()
