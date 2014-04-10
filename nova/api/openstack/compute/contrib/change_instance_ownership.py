@@ -173,6 +173,7 @@ class ChangeInstanceOwnershipController(object):
             QUOTAS.commit(context, reservations_del)
 
     def _is_user_in_project(self, user_id, project_id, keystone_client):
+        LOG.debug("::DEBUG::PROJECTS_LIST_FOR_USER::%s::" % keystone_client.projects.list(user=user_id))
         for i in keystone_client.projects.list(user=user_id):
                 if project_id == i.id:
                     return project_id
