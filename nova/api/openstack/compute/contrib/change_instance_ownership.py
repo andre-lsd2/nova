@@ -81,7 +81,7 @@ class ChangeInstanceOwnershipController(object):
 
         auth_url = self._delete_v2_from_url(auth_url)
         LOG.debug("TESTING NEW AUTH_URL: %s" % auth_url)
-        keystone_client = client.Client(token=context.auth_token, auth_url=auth_url, endpoint=auth_url)
+        keystone_client = client.Client(token=context.auth_token, auth_url="http://10.1.0.32:5000/v3", endpoint="http://10.1.0.32:5000/v3")
         #keystone_client = client.Client(token=context.auth_token, auth_url="http://10.1.0.32:5000/v3")
 
         #LOG.debug("::DEBUG::KEYSTONE::USERS::%s" % keystone_client.users)
