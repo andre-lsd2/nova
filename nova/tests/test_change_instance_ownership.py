@@ -71,7 +71,8 @@ class ChangeInstanceOwnershipTestCase(test.TestCase):
         #cls.token = cls.keystone.get_raw_token_from_identity_service(self, auth_url="http://127.0.0.1:5000/v3/", username="admin", password="admin", tenant_name, tenant_id, token, user_id, user_domain_id, user_domain_name, domain_id, domain_name, project_id, project_name, project_domain_id, project_domain_name, trust_id)
         #cls.token = cls.keystone.get_raw_token_from_identity_service(auth_url="http://127.0.0.1:5000/v3/", username="admin", password="admin")
 
-        #cls.project01 = cls.keystone.projects.create("project01", None)
+        cls.project01 = cls.keystone.projects.create("project01", None)
+        print("PROJECT01: %s" % cls.project01)
         #cls.user01    = cls.keystone.users.create("user01", project="admin")
         #cls.user02    = cls.keystone.users.create("user02", project=cls.project01)
 
@@ -151,7 +152,7 @@ class ChangeInstanceOwnershipTestCase(test.TestCase):
 
         self.assertEquals(1, 2)
 
-    def test_case_old(self):
+    """def test_case_old(self):
         print("Test")
         config_path = os.environ.get('GLANCE_TEST_SWIFT_CONF')
         print("::PRINT::CONFIG::PATH::%s::" % config_path)
@@ -202,5 +203,5 @@ class ChangeInstanceOwnershipTestCase(test.TestCase):
         config_path = os.environ.get('GLANCE_TEST_SWIFT_CONF')
         print("::PRINT::CONFIG::PATH::%s::" % config_path)
 
-        self.assertEquals(1, 2)
+        self.assertEquals(1, 2)"""
 
