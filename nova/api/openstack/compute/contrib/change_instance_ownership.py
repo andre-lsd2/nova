@@ -42,60 +42,34 @@ class ChangeInstanceOwnershipController(object):
             if i.get("interface") == interface_type:
                 return i.get("url")
 
+    def _get_url_from_catalog(self, catalog, endpoint_type="identity", interface_type="public"):
+        endpoint = self._get_endpoint_from_catalog(catalog, endpoint_type)
+        return self._get_url_from_endpoint(endpoint, interface_type)
+
     def action(self, req, id, body):
-
-        LOG.debug("::PRINT::CHANGE_INSTANCE_OWNERSHIP::ACTION::REQ::%s::ID::%s::BODY::%s::" % (req, id, body))
-
         context = req.environ['nova.context']
         authorize(context)
-
-        #LOG.debug("ALL INSTANCES: %s" % db.instance_get_all(context))
 
         instance = db.instance_get_by_uuid(context, id)
         owner_id = context.user_id
 
         catalog = req.headers.get('X-Service-Catalog', req.headers.get('X_STORAGE_TOKEN'))
+        auth = self._get_url_from_catalog(catalog)
 
-        LOG.debug("TESTING AUTH_URL: %s" % catalog)
+        LOG.debug("::DEBUG::AUTH_URL::%s::" % auth)
+
         catalog = ast.literal_eval(catalog)
 
-        #for i in catalog:
-        #    if i.get("type") == "identity":
-        #        LOG.debug("TESTING IDENTITY: %s" % i)
-
         auth_url = None
-
         for i in catalog:
             if i.get("type") == "identity":
                 for j in i.get("endpoints"):
                     if j.get("interface") == "public":
                         auth_url = j.get("url")
 
-        #auth_url = "http://10.1.0.32:5000/v2.0"
-        LOG.debug("TESTING AUTH_URL: %s" % auth_url)
-
-
-        #sc = access.AccessInfo.factory(None, compat_catalog).service_catalog
 
         auth_url = self._replace_url_version(auth_url)
-        LOG.debug("TESTING NEW AUTH_URL: %s" % auth_url)
         keystone_client = client.Client(token=context.auth_token, endpoint=auth_url)
-        #keystone_client = client.Client(token=context.auth_token, auth_url=auth_url, endpoint=auth_url, management_url=auth_url)
-        #keystone_client = client.Client(token=context.auth_token, auth_url="http://10.1.0.32:5000/v3")
-
-        LOG.debug("::DEBUG::KEYSTONE::USERS::%s" % keystone_client)
-        #LOG.debug("::DEBUG::CHANGE_INSTANCE_OWNERSHIP::REQUESTTYPE::%s::" % req.environ.keys())
-        #LOG.debug("::DEBUG::CHANGE_INSTANCE_OWNERSHIP::REQUESTTYPE::%s::" % req.environ["HTTP_X_SERVICE_CATALOG"])
-        #y = req.environ["HTTP_X_SERVICE_CATALOG"]
-        #y = ast.literal_eval(y)
-        #LOG.debug("::DEBUG::CHANGE_INSTANCE_OWNERSHIP::Y::%s::" % y)
-        #new_y = self._delete_keystonev2_from_catalog(y)
-        #LOG.debug("::DEBUG::CHANGE_INSTANCE_OWNERSHIP::NEW_Y::%s::" % new_y)
-        #LOG.debug("::DEBUG::CHANGE_INSTANCE_OWNERSHIP::REQUESTTYPE::%s::" % req.environ["HTTP_X_SERVICE_CATALOG"])
-
-        keystone_client.users.list()
-
-        LOG.debug("::DEBUG::CHANGE_INSTANCE_OWNERSHIP::ACTION::BODY::" % body)
 
         user_id = owner_id
         if ('user_id' in body):
@@ -105,12 +79,6 @@ class ChangeInstanceOwnershipController(object):
         if ('project_id' in body):
             project_id = body['project_id']
 
-        #user_id = body['user_id'] if 'user_id' in body else owner_id
-        #project_id = body['project_id'] if 'project_id' in body else instance.project_id
-
-        LOG.debug("::DEBUG::CHANGE_INSTANCE_OWNERSHIP::ACTION::USER_ID::%s::PROJECT_ID::%s::" % (user_id, project_id))
-        print("::PRINT::CHANGE_INSTANCE_OWNERSHIP::ACTION::USER_ID::%s::PROJECT_ID::%s::" % (user_id, project_id))
-
         if (user_id == owner_id and project_id == instance.project_id):
             raise webob.exc.HTTPBadRequest(explanation="User_id or Project_id were not found in the request body")
 
@@ -118,8 +86,7 @@ class ChangeInstanceOwnershipController(object):
             raise webob.exc.HTTPBadRequest(explanation="PROBLEM")
             #raise webob.exc.HTTPBadRequest(explanation="User_id or Project_id were not found in the request body")
 
-        print("::PRINT::CHANGE_INSTANCE_OWNERSHIP::ACTION::OWNER_ID::%s::INSTANCE::%s::" % (owner_id, instance))
-        #self._commit(instance, context, body, id, user_id, project_id)
+        self._commit(instance, context, body, id, user_id, project_id)
 
 
     def _replace_url_version(self, url, old="2.0", new="3"):
