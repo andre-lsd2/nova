@@ -61,18 +61,11 @@ class ChangeInstanceOwnershipController(object):
 
         catalog = req.headers.get('X-Service-Catalog', req.headers.get('X_STORAGE_TOKEN'))
 
-        auth = self._get_url_from_catalog(catalog)
-
-        LOG.debug("::DEBUG::AUTH_URL::%s::" % auth)
-        auth_url = None
-        for i in catalog:
-            if i.get("type") == "identity":
-                for j in i.get("endpoints"):
-                    if j.get("interface") == "public":
-                        auth_url = j.get("url")
-
-
+        auth_url = self._get_url_from_catalog(catalog)
+        LOG.debug("::DEBUG::AUTH_URL::%s::" % auth_url)
         auth_url = self._replace_url_version(auth_url)
+        LOG.debug("::DEBUG::NEW_AUTH_URL::%s::" % auth_url)
+
         keystone_client = client.Client(token=context.auth_token, endpoint=auth_url)
 
         user_id = self._get_field_from_body("user_id", body, owner_id)
