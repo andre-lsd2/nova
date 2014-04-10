@@ -103,11 +103,11 @@ class ChangeInstanceOwnershipController(object):
             LOG.debug("::DEBUG::CHANGE_INSTANCE_OWNERSHIP::ACTION::USER_ID::")
             print("::PRINT::CHANGE_INSTANCE_OWNERSHIP::ACTION::USER_ID::")
             user_id = body['user_id'] if 'user_id' in body else owner_id
-        project_id = None
+        project_id = instance.project_id
         if ('project_id' in body):
             LOG.debug("::DEBUG::CHANGE_INSTANCE_OWNERSHIP::ACTION::PROJECT_ID::")
             print("::PRINT::CHANGE_INSTANCE_OWNERSHIP::ACTION::PROJECT_ID::")
-            project_id = body['project_id'] if 'project_id' in body else instance.project_id
+            project_id = body['project_id']
 
         #user_id = body['user_id'] if 'user_id' in body else owner_id
         #project_id = body['project_id'] if 'project_id' in body else instance.project_id
