@@ -78,7 +78,7 @@ class ChangeInstanceOwnershipController(object):
 
         #sc = access.AccessInfo.factory(None, compat_catalog).service_catalog
 
-        auth_url = self._replace_url_version(auth_url, old="/v2.0", new="")
+        auth_url = self._replace_url_version(auth_url, old="v2.0", new="")
         LOG.debug("TESTING NEW AUTH_URL: %s" % auth_url)
         keystone_client = client.Client(token=context.auth_token, auth_url=auth_url, endpoint=auth_url)
         #keystone_client = client.Client(token=context.auth_token, auth_url="http://10.1.0.32:5000/v3")
