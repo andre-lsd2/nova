@@ -67,7 +67,7 @@ class ChangeInstanceOwnershipTestCase(test.TestCase):
 
         cls.controller = ChangeInstanceOwnershipController()
 
-        cls.context = context.RequestContext("user_id", "project_id", auth_token="auth_token")
+        cls.context = context.RequestContext("user_id", "project_id")
 
         print("Context: %s" % cls.context)
 
