@@ -79,9 +79,9 @@ class ChangeInstanceOwnershipController(object):
 
         #sc = access.AccessInfo.factory(None, compat_catalog).service_catalog
 
-        auth_url = self._delete_v2_from_url(auth_url)
+        auth_url = self._replace_url_version(auth_url)
         LOG.debug("TESTING NEW AUTH_URL: %s" % auth_url)
-        keystone_client = client.Client(token=context.auth_token, auth_url="http://10.1.0.32:5000", endpoint="http://10.1.0.32:5000")
+        keystone_client = client.Client(token=context.auth_token, auth_url=auth_url, endpoint=auth_url)
         #keystone_client = client.Client(token=context.auth_token, auth_url="http://10.1.0.32:5000/v3")
 
         #LOG.debug("::DEBUG::KEYSTONE::USERS::%s" % keystone_client.users)
@@ -120,10 +120,10 @@ class ChangeInstanceOwnershipController(object):
         if not self._is_user_in_project(user_id, project_id, keystone_client):
             raise webob.exc.HTTPBadRequest(explanation="User_id or Project_id were not found in the request body")"""
 
-    def _delete_v2_from_url(self, url):
-        until = url.find("v2.0")
+    def _replace_url_version(self, url, old="2.0", new="3"):
+        until = url.find(old)
 
-        return url[:until]
+        return url[:until] + new
 
     def _delete_keystonev2_from_catalog(self, catalog):
         new_catalog = []
