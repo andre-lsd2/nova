@@ -47,10 +47,10 @@ class ChangeInstanceOwnershipController(object):
         return self._get_url_from_endpoint(endpoint, interface_type)
 
     def _get_field_from_body(self, field, body, default=None):
-        user_id = default
+        value = default
         if (field in body):
-            user_id = body[field]
-        pass
+            value = body[field]
+        return value
 
     def action(self, req, id, body):
         context = req.environ['nova.context']
@@ -75,11 +75,10 @@ class ChangeInstanceOwnershipController(object):
             raise webob.exc.HTTPBadRequest(explanation="User_id or Project_id were not found in the request body")
 
         if (user_id == owner_id and project_id == instance.project_id):
-            raise webob.exc.HTTPBadRequest(explanation="The User_id and Project_id provided is the same ")
+            raise webob.exc.HTTPBadRequest(explanation="The User_id and Project_id provided is the same as the current one")
 
         if not self._is_user_in_project(user_id, project_id, keystone_client):
-            raise webob.exc.HTTPBadRequest(explanation="The ")
-            #raise webob.exc.HTTPBadRequest(explanation="User_id or Project_id were not found in the request body")
+            raise webob.exc.HTTPBadRequest(explanation="The user_id or project_id provided are not valid for changing instance ownership")
 
         #self._commit(instance, context, body, id, user_id, project_id)
 
@@ -132,8 +131,6 @@ class ChangeInstanceOwnershipController(object):
             QUOTAS.commit(context, reservations_del)
 
     def _is_user_in_project(self, user_id, project_id, keystone_client):
-        LOG.debug("::DEBUG::USER_ID::%s::PROJECT_ID::%s::" % (user_id, project_id))
-        LOG.debug("::DEBUG::PROJECTS_LIST_FOR_USER::%s::" % keystone_client.projects.list(user=user_id))
         for i in keystone_client.projects.list(user=user_id):
                 if project_id == i.id:
                     return project_id
