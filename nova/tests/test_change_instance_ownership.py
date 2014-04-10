@@ -39,6 +39,8 @@ from oslo.config import cfg
 
 from keystoneclient.v3 import client
 
+import os
+
 from nova.openstack.common import log as logging
 
 LOG = logging.getLogger(__name__)
@@ -77,6 +79,7 @@ class ChangeInstanceOwnershipTestCase(test.TestCase):
         #cls.context3 = context.RequestContext(cls.user01.id, cls.project01.id)
         cls.context2 = context.get_admin_context()
         cls.context1 = FakeContext(cls.project01.id, cls.user01.id)
+        config_path = os.environ.get('GLANCE_TEST_SWIFT_CONF')
 
     @classmethod
     def tearDownClass(cls):
