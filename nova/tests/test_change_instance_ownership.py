@@ -163,6 +163,7 @@ class ChangeInstanceOwnershipTestCase(test.TestCase):
 
         print("client created for %s" % admin_client.username)
         print(admin_client.users.list())
+        print(admin_client.projects.list())
 
         req = fakes.HTTPRequest.blank('/v2/fake/os-change-instance-ownership/%s' % instance.uuid)
         res_dict = self.controller.action(req, instance.uuid, body)
