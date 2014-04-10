@@ -20,7 +20,7 @@ from nova import exception
 from nova import quota
 from nova.openstack.common.gettextutils import _
 from nova.openstack.common import log as logging
-from keystoneclient.v3 import client
+from keystoneclient import client
 
 import ast
 
@@ -78,12 +78,12 @@ class ChangeInstanceOwnershipController(object):
 
         #sc = access.AccessInfo.factory(None, compat_catalog).service_catalog
 
-        auth_url = self._replace_url_version(auth_url)
+        #auth_url = self._replace_url_version(auth_url)
         LOG.debug("TESTING NEW AUTH_URL: %s" % auth_url)
         keystone_client = client.Client(token=context.auth_token, auth_url=auth_url, endpoint=auth_url, management_url=auth_url)
         #keystone_client = client.Client(token=context.auth_token, auth_url="http://10.1.0.32:5000/v3")
 
-        #LOG.debug("::DEBUG::KEYSTONE::USERS::%s" % keystone_client.users)
+        LOG.debug("::DEBUG::KEYSTONE::USERS::%s" % keystone_client)
         #LOG.debug("::DEBUG::CHANGE_INSTANCE_OWNERSHIP::REQUESTTYPE::%s::" % req.environ.keys())
         #LOG.debug("::DEBUG::CHANGE_INSTANCE_OWNERSHIP::REQUESTTYPE::%s::" % req.environ["HTTP_X_SERVICE_CATALOG"])
         #y = req.environ["HTTP_X_SERVICE_CATALOG"]
