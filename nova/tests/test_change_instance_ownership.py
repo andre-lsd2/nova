@@ -129,6 +129,7 @@ class ChangeInstanceOwnershipTestCase(test.TestCase):
 
     def test_case_one(self):
         print("Test One")
+        self.context = context.get_admin_context()
 
         body = {"user_id": "u02"}
         instance = self._create_instance("u01", "p01")
